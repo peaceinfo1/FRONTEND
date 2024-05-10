@@ -1,0 +1,209 @@
+﻿@model BOL.LISTING.WorkingHours
+@inject DAL.LISTING.ListingDbContext listingContext
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<!-- Begin: Create history -->
+@await Component.InvokeAsync("UserHistory", "Visited create listing page.")
+<!-- End: -->
+<!-- Begin: Breadcrumb -->
+@{
+    ViewData["BC-1"] = "Subscriptions";
+    ViewData["BC-2"] = "Working Hours";
+    ViewData["BC-3"] = ViewData["Title"];
+    ViewData["BT-Text"] = "View All Listings";
+    ViewData["BT-Link"] = "/Subscriptions/Listings/Index";
+    ViewData["RecordID"] = Model.WorkingHoursID;
+    // Shafi: Get Listing ID for Menu
+    var listingId = listingContext.WorkingHours.Where(i => i.WorkingHoursID == Model.WorkingHoursID).Select(i => i.ListingID).FirstOrDefault();
+    ViewData["RecordID"] = listingId;
+    // End:
+}
+<!-- End: -->
+<!-- Begin: Toggle class of menu based on active -->
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $Active = $('[name = "WorkingHours');
+            $Active.addClass("active");
+            $Active.find('span').removeClass("badge badge-secondary badge-pill").addClass("badge badge-light badge-pill");
+        });
+    </script>
+
+    @await Component.InvokeAsync("WorkingHours")
+}
+<!-- End: -->
+
+<div class="col-lg-12">
+    <div class="row">
+        @await Component.InvokeAsync("EditListingSideMenu")
+        <div class="col-lg-10">
+            <form asp-action="Edit" class="parsley-style-1" id="selectForm2" name="selectForm2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>@ViewData["Title"] @ViewBag.ListingID</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" id="copy" /> Copy To All
+                                </label>
+                            </div>
+                            <div class="col-md-12">
+                                <!-- Begin: Hidden -->
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="WorkingHoursID" />
+                                <input type="hidden" asp-for="ListingID" />
+                                <input type="hidden" asp-for="OwnerGuid" />
+                                <input type="hidden" asp-for="IPAddress" />
+                                <span asp-validation-for="ListingID" class="text-danger"></span>
+                                <span asp-validation-for="OwnerGuid" class="text-danger"></span>
+                                <span asp-validation-for="IPAddress" class="text-danger"></span>
+                                <!-- End:-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="MondayFrom" class="control-label"></label>
+                                    <input asp-for="MondayFrom" class="form-control" id="MondayFrom" />
+                                    <span asp-validation-for="MondayFrom" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="MondayTo" class="control-label"></label>
+                                    <input asp-for="MondayTo" class="form-control" id="MondayTo" />
+                                    <span asp-validation-for="MondayTo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="TuesdayFrom" class="control-label"></label>
+                                    <input asp-for="TuesdayFrom" class="form-control" id="TuesdayFrom" />
+                                    <span asp-validation-for="TuesdayFrom" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="TuesdayTo" class="control-label"></label>
+                                    <input asp-for="TuesdayTo" class="form-control" id="TuesdayTo" />
+                                    <span asp-validation-for="TuesdayTo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="WednesdayFrom" class="control-label"></label>
+                                    <input asp-for="WednesdayFrom" class="form-control" id="WednesdayFrom" />
+                                    <span asp-validation-for="WednesdayFrom" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="WednesdayTo" class="control-label"></label>
+                                    <input asp-for="WednesdayTo" class="form-control" id="WednesdayTo" />
+                                    <span asp-validation-for="WednesdayTo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="ThursdayFrom" class="control-label"></label>
+                                    <input asp-for="ThursdayFrom" class="form-control" id="ThursdayFrom" />
+                                    <span asp-validation-for="ThursdayFrom" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="ThursdayTo" class="control-label"></label>
+                                    <input asp-for="ThursdayTo" class="form-control" id="ThursdayTo" />
+                                    <span asp-validation-for="ThursdayTo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="FridayFrom" class="control-label"></label>
+                                    <input asp-for="FridayFrom" class="form-control" id="FridayFrom" />
+                                    <span asp-validation-for="FridayFrom" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="FridayTo" class="control-label"></label>
+                                    <input asp-for="FridayTo" class="form-control" id="FridayTo" />
+                                    <span asp-validation-for="FridayTo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="SaturdayHoliday" id="SaturdayHoliday" /> @Html.DisplayNameFor(model => model.SaturdayHoliday)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SaturdayFrom" class="control-label"></label>
+                                    <input asp-for="SaturdayFrom" class="form-control" id="SaturdayFrom" />
+                                    <span asp-validation-for="SaturdayFrom" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SaturdayTo" class="control-label"></label>
+                                    <input asp-for="SaturdayTo" class="form-control" id="SaturdayTo" />
+                                    <span asp-validation-for="SaturdayTo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="SundayHoliday" id="SundayHoliday" /> @Html.DisplayNameFor(model => model.SundayHoliday)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SundayFrom" class="control-label"></label>
+                                    <input asp-for="SundayFrom" class="form-control" id="SundayFrom" />
+                                    <span asp-validation-for="SundayFrom" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SundayTo" class="control-label"></label>
+                                    <input asp-for="SundayTo" class="form-control" id="SundayTo" />
+                                    <span asp-validation-for="SundayTo" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <input type="submit" value="Save & Continue" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+﻿@model IEnumerable<BOL.VIEWMODELS.FreeListingViewModel>
+@inject ICategory categoryRepository
+@inject IAddresses addressRepository
+@inject IListingManager listingRepository
+@inject IUserProfileRepo userProfileRepository
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/Frontend-New/_SearchResult.cshtml";
+}
+
+<div class="container">
+    <!--Category Banner Start-->
+    <div class="banner-block one-block">
+        <div class="row">
+            <div class="col-12">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/banners/nayan-enterprises.jpg" alt="">
+                    </figure>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--Category Banner Start-->
+    <!--Listing Category Start-->
+    <div class="listing-list">
+        <div class="row">
+            <div class="col-lg-3 listing-sidebar">
+                <div class="sider-card">
+                    <img src="~/banners/square banner 1.jpg" alt="">
+                </div>
+                <div class="sider-card">
+                    <img src="~/banners/square banner 2.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-9 mb-space-remove">
+                @foreach (var item in Model)
+                {
+                    // Begin: Category
+                    var firstCategory = await categoryRepository.FirstCategoryDetailsAsync(item.Categories.FirstCategoryID);
+                    var secondCategory = await categoryRepository.SecondCategoryDetailsAsync(item.Categories.SecondCategoryID);
+                    // End:
+                    // Begin: Address
+                    var country = await addressRepository.CountryDetailsAsync(item.Address.CountryID);
+                    var state = await addressRepository.StateDetailsAsync(item.Address.StateID);
+                    var city = await addressRepository.CityDetailsAsync(item.Address.City);
+                    var assembly = await addressRepository.StationDetailsAsync(item.Address.AssemblyID);
+                    var pincode = await addressRepository.PincodeDetailsAsync(item.Address.PincodeID);
+                    var locality = await addressRepository.LocalityDetailsAsync(item.Address.LocalityID);
+                    // End:
+                    // Begin: Get Rating
+                    var rating = await listingRepository.GetRatingAsync(item.Listing.ListingID);
+                    var ratingCount = rating.Count();
+                    var ratingAverage = await listingRepository.RatingAverageAsync(item.Listing.ListingID);
+                    // End:
+
+                    // Shafi: Begin business open or close
+                    var openClose = await listingRepository.BusinessOpenOrCloseAsync(item.Listing.ListingID);
+                    // End:
+
+                    <div class="strip map_view">
+                        <div class="row no-gutters">
+                            <div class="col-4">
+                                <figure>
+                                    <a href="#"><img src="./~/new-theme/FrontEnd/img/hotel_2.jpg" class="img-fluid" alt=""></a>
+                                </figure>
+                            </div>
+                            <div class="col-8">
+                                <div class="wrapper">
+                                    <a href="#0" class="loc_open">Claim Listing</a>
+                                    <h3><a href="~/Listing/Index/@item.Listing.ListingID">@item.Listing.CompanyName</a></h3>
+                                    <small>interior Cotractor</small>
+                                    <p><a href="#0" onclick="onHtmlClick('Marker',1)" class="address">@item.Address.LocalAddress</a></p>
+                                    <p class="loc-time">
+                                        Hours :
+                                        @if (openClose == "Open Now")
+                                        {
+                                            <b>Open Now</b>
+                                        }
+                                        @if (openClose == "Closed Now")
+                                        {
+                                            <b>Closed Now</b>
+                                        }
+                                        Closes 8pm
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 listing-bottom">
+                                <ul class="listing-bottom-list">
+                                    <li>
+                                        <h4 class="business-year">3+ Year in business</h4>
+                                    </li>
+                                    <li>
+                                        <a href="tel:1234567890" class="loc_open call-now"> Call Now </a>
+                                    </li>
+                                    <li>
+                                        <a href="#0" class="loc_open"> Get Quotation </a>
+                                    </li>
+                                    <li>
+                                        <ul class="reating-list">
+                                            <li><h4 class="reating-number">@ratingAverage</h4></li>
+                                            <li class="reating-star">
+                                                <div class="cat_star">
+                                                    <i class="icon_star"></i>
+                                                    <i class="icon_star"></i>
+                                                    <i class="icon_star"></i>
+                                                    <i class="icon_star"></i>
+                                                    <i class="icon_star"></i>
+                                                </div>
+                                            </li>
+                                            <li class="reating-people"><p>(@ratingCount)</p></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!--Listing Category End-->
+
+</div>

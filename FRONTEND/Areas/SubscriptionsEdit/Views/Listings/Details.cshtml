@@ -1,0 +1,137 @@
+﻿@model BOL.LISTING.Listing
+
+@{
+    ViewData["Title"] = "Edit Company";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<!-- Begin: Create history -->
+@await Component.InvokeAsync("UserHistory", "Visited create listing page.")
+<!-- End: -->
+<!-- Begin: Breadcrumb -->
+@{
+    ViewData["BC-1"] = "Subscriptions";
+    ViewData["BC-2"] = "Company";
+    ViewData["BC-3"] = ViewData["Title"];
+    ViewData["BT-Text"] = "View All Listings";
+    ViewData["BT-Link"] = "/Subscriptions/Listings/Index";
+    ViewData["RecordID"] = Model.ListingID;
+}
+<!-- End: -->
+<!-- Begin: Change status of active edit listing menu based on selection -->
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $Active = $('[name = "@ViewData["BC-2"]"]');
+            $Active.addClass("active");
+            $Active.find('span').removeClass("badge badge-secondary badge-pill").addClass("badge badge-light badge-pill");
+        });
+    </script>
+
+    <script src="~/backend/assets/js/modal.js"></script>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script type="text/javascript">
+            $(window).on('load', function () {
+                $('#modalSuccess').modal('show');
+            });
+        </script>
+    }
+}
+<!-- End: -->
+
+<div class="col-lg-12">
+    <div class="row">
+        @await Component.InvokeAsync("EditListingSideMenu")
+
+        <div class="col-lg-10">
+            <h4>@ViewData["Title"]</h4>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Business Category</label>
+                        <select asp-for="BusinessCategory" asp-items="@ViewBag.BusinessCategory" class="form-control user-can-add-value select2" data-parsley-class-handler="#fnWrapper" required disabled>
+                            <option selected value=""></option>
+                        </select>
+                        <span asp-validation-for="BusinessCategory" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="CompanyName" class="control-label"></label>
+                        <input asp-for="CompanyName" class="form-control" data-parsley-class-handler="#fnWrapper" required disabled />
+                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="NatureOfBusiness" class="control-label"></label>
+                        <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusiness" class="form-control select2" data-parsley-class-handler="#fnWrapper" required disabled>
+                            <option selected value=""></option>
+                        </select>
+                        <span asp-validation-for="NatureOfBusiness" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="YearOfEstablishment" class="control-label"></label>
+                        <input asp-for="YearOfEstablishment" class="form-control" data-parsley-class-handler="#fnWrapper" required disabled />
+                        <span asp-validation-for="YearOfEstablishment" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="NumberOfEmployees" class="control-label"></label>
+                        <input asp-for="NumberOfEmployees" class="form-control" disabled />
+                        <span asp-validation-for="NumberOfEmployees" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Turnover" class="control-label"></label>
+                        <select asp-for="Turnover" asp-items="@ViewBag.Turnover" class="form-control select2" disabled>
+                            <option selected value=""></option>
+                        </select>
+                        <span asp-validation-for="Turnover" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="GSTNumber" class="control-label"></label>
+                        <input asp-for="GSTNumber" class="form-control" disabled />
+                        <span asp-validation-for="GSTNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" rows="4" class="form-control" disabled></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <a asp-action="Edit" asp-route-id="@Model.ListingID" class="btn btn-primary">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Begin: Model popup for listing created successfuly -->
+<div class="modal" id="modalSuccess">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content tx-size-sm">
+            <div class="modal-body tx-center pd-y-20 pd-x-20">
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button> <i class="icon ion-ios-checkmark-circle-outline tx-100 tx-success lh-1 mg-t-20 d-inline-block"></i>
+                <h4 class="tx-success tx-semibold mg-b-20">Success!</h4>
+                <h6 class="mg-b-20 mg-x-20">@TempData["SuccessMessage"]</h6>
+                <div class="modal-footer justify-content-center">
+                    <button class="btn ripple btn-success" data-dismiss="modal" type="button">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End: -->

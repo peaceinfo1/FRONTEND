@@ -1,0 +1,58 @@
+﻿/* Shafi: Mobile Top Nav Bar*/
+.mim-sm-top-nav-bar {
+    background-color:#ffffff;
+    padding:10px;
+    height:55px;
+}
+
+    .mim-sm-top-nav-bar .mim-sm-toggle {
+        width: 20px;
+        margin-left: -5px;
+        margin-top: 5px;
+    }
+
+    .mim-sm-top-nav-bar .mim-sm-logo {
+        width: 180px;
+    }
+
+    .mim-sm-top-nav-bar .mim-sm-profile {
+        width: 30px;
+        margin-top: 5px;
+    }
+/* End: Mobile Top Nav Bar*/
+
+/* Shafi: Sticky Search Bar */
+.mim-sm-sticky-search-bar {
+    background-color: #ECECEC;
+    height: 45px;
+    padding: 5px;
+}
+
+    .mim-sm-sticky-search-bar input {
+        border: none;
+        height: 35px;
+        background-color: white;
+        margin: auto;
+        display: block;
+        border-radius: 50px;
+        padding:15px;
+        width:80%;
+    }
+
+    .mim-sm-sticky-search-bar input:focus {
+        outline:none;
+        color:#2f2f2f;
+    }
+
+        .mim-sm-sticky-search-bar button {
+            border:none;
+        }
+/* End: Sticky Search Bar */
+
+/* Begin: Below Slide Banner */
+.mim-sm-below-slider-banner img {
+    padding: 0px;
+}
+.mim-sm-below-slider-banner img {
+    
+}

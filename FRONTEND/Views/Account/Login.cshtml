@@ -1,0 +1,202 @@
+﻿@model IDENTITY.Models.ViewModels.UserMobileViewModel
+
+@{
+    ViewData["Title"] = "Login With OTP";
+    Layout = "~/Views/Shared/_Account.cshtml";
+}
+
+@section CSS{
+    <link href="~/css/mim-authorization-pages.css" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts{
+    <!-- Shafi: jQuery Reference -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- End: -->
+    <script type="text/javascript">
+        /* Shafi: Hide at startup */
+        $("#otpForm").hide();
+        $("#passwordForm").hide();
+        /* End: */
+
+        /* Shafi: Registration Form */
+        $("#loginButton").click(function () {
+            /* Shafi: Create variable for countryCode and Mobile */
+            var mobileNumber = $("#mobileNumber").val();
+            /* End: */
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GenerateLoginOTP", "Account", new { area = "" })',
+                dataType: 'json',
+                data: {
+                    mobile: mobileNumber
+                },
+                success: function (otpData) {
+                    /* Shafi: Parse data into Json */
+                    otpData = JSON.parse(otpData);
+                    /* End: */
+                    /* Shafi: If data.Status == Success executive this */
+                    if (otpData.Status == "Success") {
+                        /* Shafi: Hide registerForm And Get OTP Value */
+                        $("#loginForm").hide();
+                        /* End: */
+                        /* Shafi: Show OTP Form */
+                        $("#otpForm").fadeIn(1000);
+                        /* End: */
+                        /* Shafi: On Verify OTP click execute this */
+                        $("#verifyOtp").click(function () {
+                            /* Begin: Get OTP input values */
+                            var otp1 = $("#otp1").val();
+                            var otp2 = $("#otp2").val();
+                            var otp3 = $("#otp3").val();
+                            var otp4 = $("#otp4").val();
+                            var otp5 = $("#otp5").val();
+                            var otp6 = $("#otp6").val();
+                        /* End: */
+                        /* Begin: Merge OTP Inputs */
+                            if (otp1 != null && otp2 != null && otp3 != null && otp4 != null && otp5 != null && otp6 != null) {
+                                /* Shafi: Merge OTP Values */
+                                var otpValues = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
+                                /* End: */
+                                if ($("#otp").val() != null && mobileNumber != null) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '@Url.Action("VerifyLoginOtp", "Account", new { area = "" })',
+                                        dataType: 'json',
+                                        data: {
+                                            mobile: otpData.Mobile,
+                                            otpId: otpData.OtpId,
+                                            otp: otpValues
+                                        },
+                                        success: function (otpStatus) {
+                                            if (otpStatus == "Success") {
+                                                // Shafi: Redirect to home page
+                                                window.location.replace("/");
+                                                // End:
+                                            }
+                                            else {
+                                                alert(otpStatus);
+                                            };
+                                        },
+                                        error: function (ex) {
+                                            $("#error").fadeIn(1000);
+                                            $("#error").html("Cannot fetch data, error is " + ex);
+                                        }
+                                    });
+                                    return false;
+                                }
+                            }
+                            else {
+                                alert("6 Digit OTP Required");
+                            }
+                        /* End: */
+                        })
+                        /* End: */
+                    };
+                    if (otpData.Status != "Success") {
+                        alert(otpData.Status);
+                    };
+                    /* End: */
+                },
+                error: function (ex) {
+                    $("#error").fadeIn(1000);
+                    $("#error").html("Cannot fetch data, error is " + ex);
+                }
+            });
+        })
+        /* End: */
+    </script>
+
+    <!-- Shafi: 6 Digit OTP Input -->
+    <script>
+        var container = document.getElementsByClassName("MIM-OTP-Box")[0];
+        container.onkeyup = function (e) {
+            var target = e.srcElement;
+            var maxLength = parseInt(target.attributes["maxlength"].value, 10);
+            var myLength = target.value.length;
+            if (myLength >= maxLength) {
+                var next = target;
+                while (next = next.nextElementSibling) {
+                    if (next == null)
+                        break;
+                    if (next.tagName.toLowerCase() == "input") {
+                        next.focus();
+                        break;
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- End: -->
+
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@if (ViewBag.Cookie != null)
+{
+    <h1>@ViewBag.Cookie</h1>
+}
+
+<div class="row justify-content-center account-form">
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-2 umar-account-form-border">
+        <a href="~/" title="UMARZONE">
+            <img src="~/img/my-interior-mart-logo.png" class="logo" />
+        </a>
+        <!-- Shafi: Register Form -->
+        <div id="loginForm">
+            <h1>@ViewData["Title"]</h1>
+            <!-- Begin: Hidden fields -->
+            <!-- End: -->
+            <input id="mobileNumber" class="umar-input" placeholder="Mobile" />
+            <button id="loginButton">Login</button>
+        </div>
+        <!-- End: -->
+        <!-- Shafi: OTP Form -->
+        <div id="otpForm">
+            <h1>OTP Verification</h1>
+            <div class="MIM-OTP-Box">
+                <span id="error" style="content:'\n'; white-space:pre;"></span>
+                <input type="text" id="otp" placeholder="OTP" hidden class="form-control" />
+                <input asp-for="Mobile" id="mobile" hidden value="@ViewBag.MIMMobile" class="umar-input" placeholder="@ViewBag.MIMMobile" />
+                <input type="number" id="otp1" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp2" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp3" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp4" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp5" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp6" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+            </div>
+            <button id="verifyOtp" style="width:200px;">Verify</button>
+            @*<p class="mt-4" style="border-top:1px solid #C6C6C6; padding-top:10px;">Didn’t Receive OTP? <br /> <a href="#0" style="color:#2459A3;" id="resentOtp">Resend Link</a></p>*@
+        </div>
+        <!-- End: OTP -->
+        <!-- Shafi: Confirm Password -->
+        <div id="passwordForm">
+            <h6>Username: <span class="ml-1"></span></h6>
+            <input type="text" id="email" class="umar-input" placeholder="Email Optional" />
+            <input type="password" id="password" class="umar-input" placeholder="Password" />
+            <input type="password" id="confirmPassword" class="umar-input" placeholder="Confirm Password" />
+            <button id="setPassword">Register</button>
+        </div>
+        <!-- End: -->
+        <h2 class="umar-h2 mt-4">
+            OR Create A New Account
+        </h2>
+        <div class="d-flex flex-row justify-content-center umar-account-footer">
+            <div class="umar-icons">
+                <img src="~/img/account-form/mobile.svg" />
+                <a href="~/Account/Register">Register</a>
+            </div>
+        </div>
+        <h2 class="umar-h2 mt-4">
+            OR Login With A Link
+        </h2>
+        <div class="d-flex flex-row justify-content-center umar-account-footer">
+            <div class="umar-icons">
+                <img src="~/img/account-form/link.svg" />
+                <a href="~/Account/LoginWithLink">Login With Link</a>
+            </div>
+        </div>
+    </div>
+</div>

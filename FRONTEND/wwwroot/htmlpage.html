@@ -1,0 +1,52 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI Autocomplete - Default functionality</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script>
+        $(function () {
+            var availableTags = [
+                "interior contractor",
+                "pop",
+                "false contractors",
+                "painting contractors",
+                "painting services",
+                "wall painting services",
+                "sign manufacturers",
+                "carpenters near me",
+                "plumbers in andheri",
+                "interior design services jogeshwari",
+                "furniture polishing",
+                "plywood dealers in andheri",
+                "wood suppliers",
+                "pop false ceiling services",
+                "pop contractors",
+                "pop dealers",
+                "mumbai pop suppliers",
+                "false ceiling dealers",
+                "interior consultants",
+                "furniture shops",
+                "office furniture",
+                "shop furniture",
+                "mumbai dealers"
+            ];
+            $("#tags").autocomplete({
+                source: availableTags
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="ui-widget">
+        <p>Available Courses:</p>
+        <label for="tags">Tags: </label>
+        <input type="text" id="tags">
+    </div>
+</body>
+</html>
+
+

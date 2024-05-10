@@ -1,0 +1,62 @@
+<!-- Shafi: This is a quick help and resource file for this entire solution -->
+
+// Shafi Wrote: Assembly References (3.1.5)
+====================================================================================================
+Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
+Microsoft.AspNetCore.Identity.EntityFrameworkCore
+Microsoft.AspNetCore.Identity.UI
+Microsoft.EntityFrameworkCore.Sqlite
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.VisualStudio.Web.CodeGeneration.Design
+End: ------------------------------------------------------------------------------------------------
+
+To update the page to show new changes made in razor view add below assembly (3.1.1)
+=====================================================================================================
+Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
+End: ------------------------------------------------------------------------------------------------
+
+To generate random strings, int, emails etc. https://github.com/sarthakmahapatra/StringRandomizer
+=====================================================================================================
+StringRandomizer
+End: ------------------------------------------------------------------------------------------------
+
+// Shafi: Problem: Razor pages not updating on page refresh.
+Solution: Add following codes in startup.cs class of STARTUP PROJECT.
+Begin: ==============================================================================================
+        using Microsoft.Extensions.FileProviders;
+        using System.IO; 
+        using Microsoft.Extensions.Hosting;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        {
+            Configuration = configuration;
+            HostEnvironment = env;
+        } 
+
+        public IConfiguration Configuration { get; }
+        public IWebHostEnvironment HostEnvironment { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            var builder = services.AddControllersWithViews();
+            #if DEBUG
+            if (HostEnvironment.IsDevelopment())
+            {
+                builder.AddRazorRuntimeCompilation(options =>   
+                {
+                    var myAccountLibraryPath = Path.GetFullPath(Path.Combine(HostEnvironment.ContentRootPath, "..", "MyAccount"));
+                    options.FileProviders.Add(new PhysicalFileProvider(myAccountLibraryPath));
+                });
+            }
+            #endif
+
+            // Shafi: Added to enable update razor view after page refreshing
+            services.AddMvc().AddControllersAsServices();
+            services.AddControllersWithViews();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
+            // End:
+
+        }
+End: ------------------------------------------------------------------------------------------------

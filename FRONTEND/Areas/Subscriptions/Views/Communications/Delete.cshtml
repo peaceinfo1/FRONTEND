@@ -1,0 +1,101 @@
+﻿@model BOL.LISTING.Communication
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+<!-- Begin: Create history -->
+@await Component.InvokeAsync("UserHistory")
+<!-- End: -->
+<!-- Begin: Breadcrumb -->
+@{
+    ViewData["BC-1"] = "Subscriptions";
+    ViewData["BC-2"] = "Listings";
+    ViewData["BC-3"] = ViewData["Title"];
+    ViewData["BT-Text"] = "Add New Listing";
+    ViewData["BT-Link"] = "/Subscriptions/Listings/Create";
+    ViewData["BT-Text2"] = "Manage Listings";
+    ViewData["BT-Link2"] = "/Subscriptions/Listings/Index";
+}
+<!-- End: -->
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Communication</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ListingID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ListingID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnerGuid)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OwnerGuid)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IPAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IPAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Website)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Website)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Mobile)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Mobile)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Whatsapp)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Whatsapp)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telephone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telephone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TollFree)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TollFree)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Fax)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fax)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SkypeID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SkypeID)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CommunicationID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

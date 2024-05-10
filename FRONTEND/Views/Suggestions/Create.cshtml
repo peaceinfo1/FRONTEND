@@ -1,0 +1,67 @@
+﻿@model BOL.AUDITTRAIL.Suggestions
+
+@{
+    ViewData["Title"] = "Suggestion";
+    Layout = "~/Views/Shared/Frontend/_ListingDetails.cshtml";
+}
+
+<div class="container margin_60_35">
+    <div class="row justify-content-center">
+
+        <div class="col-xl-5 col-lg-6 pr-xl-5">
+            <div class="main_title_3">
+                <span></span>
+                <h2>Contact Us</h2>
+                <p>Your happiness is what matters</p>
+            </div>
+            <div id="message-contact"></div>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="Date" type="hidden" value="@DateTime.Now" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Mobile" class="control-label"></label>
+                    <input asp-for="Mobile" class="form-control" />
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Suggestion" class="control-label"></label>
+                    <input asp-for="Suggestion" class="form-control" />
+                    <span asp-validation-for="Suggestion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <div class="col-xl-5 col-lg-6 pl-xl-5">
+            <div class="box_contacts">
+                <i class="ti-support"></i>
+                <h2>Need Help?</h2>
+                <a href="tel:7700995500">+91-7700995500</a> - <a href="mailto:info@myinteriormart.com">info@myinteriormart.com</a>
+            </div>
+            <div class="box_contacts">
+                <i class="ti-help-alt"></i>
+                <h2>Book Advertisement</h2>
+                <a href="tel:7700994015">+91-7700994015</a> - <a href="mailto:sales@myinteriormart.com">sales@myinteriormart.com</a>
+            </div>
+            <div class="box_contacts">
+                <i class="ti-home"></i>
+                <h2>Address</h2>
+                <a href="#0">Perl Residence Office No.22, Opp Wadia School, D.N.Nagar, Andheri West, Mumbai, Maharashtra 400053.</a>
+            </div>
+        </div>
+    </div>
+</div>

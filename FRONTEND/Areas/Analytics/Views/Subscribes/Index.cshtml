@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BOL.VIEWMODELS.SubscribeListingViewModel>
+
+@{
+    ViewData["Title"] = "Subscribe";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+    ViewData["RowCount"] = Model.Count();
+}
+
+<!-- Begin: Breadcrumb -->
+@{
+    ViewData["BC-1"] = "Analytics";
+    ViewData["BC-2"] = "Subscribe";
+    ViewData["BC-3"] = ViewData["Title"];
+    ViewData["BT-Text-1"] = "Manage";
+    ViewData["BT-Link-1"] = "#0";
+    ViewData["BT-Text-2"] = "Change Later";
+    ViewData["BT-Link-2"] = "#";
+}
+<!-- End: -->
+
+<h5>@ViewData["Title"]<span class="float-right">Total : @ViewData["RowCount"]</span></h5>
+<hr />
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add().RenderedAs((model, row) => model.SubscribeID).Titled("#").Css("text-center");
+        columns.Add(model => Html.ActionLink(model.CompanyName, "Index", "Listing", new { id = model.ListingID, area = "" }, new { target = "_blank" })).Encoded(false).Titled("Company");
+        columns.Add(model => model.VisitDate).Titled("Visit Date").Titled("Date");
+        columns.Add(model => model.VisitTime).Titled("Visit Time").Titled("Time");
+    })
+    .Filterable()
+    .Sortable()
+    .Pageable(pager =>
+    {
+        pager.PageSizes = new Dictionary<Int32, String> { { 10, "10" }, { 50, "50" }, { 75, "75" }, { 100, "100" }, { 0, "All" } };
+        pager.ShowPageSizes = true;
+        pager.PagesToDisplay = 3;
+        pager.CurrentPage = 1;
+        pager.RowsPerPage = 10;
+    })
+    .Using(GridFilterMode.Row)
+    .Empty("No data found")
+    .AppendCss("table-hover")
+)

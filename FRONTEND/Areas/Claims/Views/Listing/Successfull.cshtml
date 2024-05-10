@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/Frontend/_SuccessOrErrorOrNotification.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/MIM-OTP-Wizard.css" />
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+<main>
+    <div class="container MIM-OTP-Wizard-Container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-5 MIM-OTP-Wizard-Heading">
+                <h4>Claim Listing</h4>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 MIM-OTP-Wizard-Type-Container">
+                <img src="~/icons/claim-listing-wizard/Visiting Card.svg" />
+                <h2>Congratulation!</h2>
+                <h3>@ViewBag.ListingCompanyName</h3>
+                <p>Successfully claimed by you.</p>
+                <a href="~/SubscriptionsEdit/Listings/Edit/@ViewBag.ListingID" class="mt-3">Edit Listing</a>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</main>

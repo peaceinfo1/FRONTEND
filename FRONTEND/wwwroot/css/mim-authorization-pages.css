@@ -1,0 +1,223 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
+    /* Shafi: Set Color Background */
+    background: rgb(255,194,169);
+    background: linear-gradient(0deg, rgba(255,194,169,0.5) 0%, rgba(196,196,196,0) 50%);
+    /* End: */
+    /* Shafi: Set Image as Background */
+    /*background-image: url('/img/account-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;*/
+    /* End: */
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.account-form {
+    position: relative;
+    box-sizing: border-box;
+    padding: 10px 10px;
+    transition: 5s;
+}
+
+    .account-form .umar-account-box {
+        border: 1px solid #8e5cd8;
+    }
+
+@media only screen and (min-width: 600px) {
+    .umar-account-form-border {
+        border: 1px solid #C6C6C6;
+        background: rgb(255,194,169);
+        background: linear-gradient(0deg, rgba(255,194,169,0.5) 0%, rgba(196,196,196,0) 50%);
+        margin-top: 100px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    body {
+        background: white;
+        background: white;
+    }
+}
+
+    .account-form .logo {
+        width: 85%;
+        margin-bottom: 0px;
+        margin-top: 5px;
+    }
+
+    .account-form img::after {
+        content: "\a";
+        white-space: pre;
+    }
+
+    .account-form .icon-small {
+        height: 50px;
+        margin-bottom: -20px;
+    }
+
+    .account-form h1 {
+        color: #E95A22;
+        font-size: 18px;
+        margin-top: 15px;
+        font-weight:bolder;
+        margin-bottom: 20px;
+    }
+
+    .account-form .umar-error {
+        color: #E95A22;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .account-form .umar-input {
+        position: relative;
+        background: #F9F9F9;
+        border: 1px solid #C6C6C6;
+        border-radius: 6px;
+        height: 35px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100%;
+        font-family: 'Roboto', sans-serif;
+        font-family: 'Source Sans Pro', sans-serif;
+        color: #616161;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .account-form input:focus {
+        outline: none;
+    }
+
+::placeholder {
+    color: #616161;
+    font-size: 14px;
+}
+
+:-ms-input-placeholder {
+    color: #E3D0FF;
+    font-size: 14px;
+}
+
+::-ms-input-placeholder {
+    color: #E3D0FF;
+    font-size: 14px;
+}
+
+.account-form .checkbox-text {
+    color: #3A3A3C;
+    margin-left: 10px;
+    font-size: 14px;
+    text-align: left;
+    text-decoration: none;
+}
+
+    .account-form .checkbox-text a {
+        text-decoration: none;
+        color: #000000;
+        font-weight: 500;
+    }
+
+        .account-form .checkbox-text a:hover {
+            color: #ffffff;
+        }
+
+.account-form button {
+    border: 1px solid #E95A22;
+    background-color: #E95A22;
+    height: 26px;
+    width: 200px;
+    color: #F9F9F9;
+    padding: 0px 10px 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+}
+
+.account-form .umar-account-footer {
+    margin-top: 20px;
+    color: #E3D0FF;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.account-form .umar-h2 {
+    font-size:16px;
+    margin-top: 10px;
+    color: #000000;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.account-form .umar-icons {
+    width: 85px;
+    height: 85px;
+    padding: 10px;
+    background-color: #FFEFE9;
+    margin: 5px;
+    border-radius: 10px;
+    align-content: center;
+}
+
+    .account-form .umar-icons img {
+        height:40px;
+        margin-bottom:5px;
+    }
+
+.account-form .umar-otp-input {
+    width: 38px;
+    height: 38px;
+    margin: 2px;
+    border: 1px solid #C6C6C6;
+    border-radius: 10px;
+    text-align:center;
+}
+
+.account-form .umar-text-left {
+    text-align: left;
+}
+
+.account-form .umar-text-right {
+    text-align: right;
+}
+
+.account-form .umar-text-center {
+    text-align: center;
+}
+
+.account-form .openid-icons {
+    width: 30px;
+    margin-top: -10px;
+}
+
+.account-form .openid-icons-big {
+    width: 37px;
+    margin-top: -10px;
+}
+
+.account-form a {
+    color: #000000;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+/* Begin: Hide OTP number box arrows */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+/* End: Hide OTP number box arrows */

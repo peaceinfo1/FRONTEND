@@ -1,0 +1,7 @@
+.speech-input {
+	width: 440px;
+	max-width: 100%;
+	font-size: 2em;
+	padding: 0.4em;
+	box-sizing: border-box;
+}

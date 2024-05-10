@@ -1,0 +1,417 @@
+﻿@inject ICategory categoryRepo
+@inject IEmailSender emailService
+@inject IConfiguration configuration
+
+@{
+    ViewData["Title"] = "My interior Mart- Smart Choice Of Smart People";
+    ViewData["Description"] = "India's First Construction & Interior Local Search Engine Find Verified & Genuine Professionals, Services, Contractors, Dealers, Manufactures, Nearby.";
+    ViewData["Keywords"] = "We are India's First Construction & Interior Search Engine Find Verified & Genuine Professionals, Contractors, Dealers, Suppliers, Manufactures, Consultants, Developer-Builder, Architects, Land Surveyors, Labor Contractors, Dealers, Wholesale, Exporter, Importer, Electricians, Plumbers, Air conditioner, Boilers, Lift, Sofa & Chair, Carpentry, Mattress, Doors, Windows, Automation,  CCTV Camera, Weighing Machine, Civil Work, False Ceiling, Modular Kitchen, Sing board, LED Screen, Intercom Phone, EPBX Landline, Ms Grill, Awning, Window  Net Shutter, Water Pump, Blinds, Plaster of Paris, Design, Legal Advisory, Security, Web Developer, Automation, CCTV Camera, On Hire, Pest Control, Cleaning, Transporters, Advertisement, Packer & Movers, Metal Coating, Polishing, Netting, Real Estate Agent, Printing, Consultancy, Wood Carving, Packaging, Metal Bending, Pump Installation, Solar Panel Installation, Tank Cleaning, Water Supply, Garden, Construction, Civil, Interior, Plumbing, Electrical, False Ceiling, Aluminum Fabrication, Pop, Air conditioner, Ducting System, Furniture, Painting, Furniture Polishing, Waterproofing, Fire Fighting, Ms Fabricator, Steel Fabricators, Glass Fabrication, False Flooring, Debris Removal, Core Cutting, Bore well, Floor Polishing, Demolition, Drainage, Bituminous Coating, Wallpaper, Building Material, Pop & Gypsum, Electrical, Plumbing, Tile, Bathroom Fitting, Plywood, Laminate & Veneers, Hardware, Metal, Glass, Acrylic Sheet, Modular Kitchen, Wallpaper, False Flooring, Lighting, Furniture, Furnishing, Mattress, Paint & Polish, Sofa & Chair, Granite & Stone, Paver Block, Stationery, Corporate Gift, Decorative Panel, Packaging Material, Modular Furniture, Window & Doors, Sofa & Chairs, Mattress, False Flooring, Porta Cabin, Board, Elevators, Tile, Construction Material, Pop & Gypsum, Bathroom Fitting, Plywood, Veneer & Laminates, Wallpaper, Signage, Paint & Polish, Modular Kitchen, Safety Product, Construction Chemical, Water Tank, Drainage System, Net, Awning & Canopy, Blinds, Promotional Products, False Ceiling, Stationery, Packaging Box, Corporate Gift.";
+    Layout = "~/Views/Shared/Frontend-New/_Home.cshtml";
+}
+
+@{
+    //string zoneId = "";
+    //TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById(zoneId);
+}
+
+@{
+    var catServices = await categoryRepo.GetSecondCategoriesHomeAsync("Services");
+    var catContractors = await categoryRepo.GetSecondCategoriesHomeAsync("Contractors");
+    var catDealers = await categoryRepo.GetSecondCategoriesHomeAsync("Dealers");
+    var catManufacturers = await categoryRepo.GetSecondCategoriesHomeAsync("Manufacturers");
+}
+
+@section Scripts{
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/Hubs-Signalr/AdminDashboard/UsersOnlineHome.js"></script>
+    <script src="~/Hubs-Signalr/AdminDashboard/GetAllConnectedUsers.js"></script>
+    <script src="~/Hubs-Signalr/AdminDashboard/AllConnectedUsersMapHub.js"></script>
+    <script src="~/js/notify.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/bigdatacloudapi/js-reverse-geocode-client@latest/bigdatacloud_reverse_geocode.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        /* Initialise Reverse Geocode API Client */
+        var reverseGeocoder = new BDCReverseGeocode();
+
+        /* Get the current user's location information, based on the coordinates provided by their browser */
+        /* Fetching coordinates requires the user to be accessing your page over HTTPS and to allow the location prompt. */
+        reverseGeocoder.getClientLocation(function (result) {
+            console.log(result);
+        });
+
+        /* Get the administrative location information using a set of known coordinates */
+        reverseGeocoder.getClientLocation({
+            latitude: 19.115520,
+            longitude: 72.827600,
+        }, function (result) {
+            console.log(result);
+        });
+
+        /* You can also set the locality language as needed */
+        reverseGeocoder.localityLanguage = 'es';
+
+        /* Request the current user's coordinates (requires HTTPS and acceptance of prompt) */
+        reverseGeocoder.getClientCoordinates(function (result) {
+            console.log(result);
+        });
+
+    </script>
+}
+
+
+<div class="container">
+    <!--Banner Start-->
+    <div class="banner-block">
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-3 banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/banners/001-400-x-267.png" alt="">
+                    </figure>
+                </a>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-3 banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/banners/004-400-x-267.png" alt="">
+                    </figure>
+                </a>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-3  banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/banners/002-400-x-267.png" alt="">
+                    </figure>
+                </a>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-3 banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/banners/003-400-x-267.png" alt="">
+                    </figure>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--Banner End-->
+    <!-- category start -->
+    <div class="category-featured">
+        <div class="show-brand">
+            <div class="row">
+                <div class="col-lg-2 col-md-12 category-list">
+                    <div class="navbar-brand">
+                        <button class="btn btn-link navbar-brand-btn" type="button">SERVICES</button>
+                    </div>
+                    <div class="navbar-brand-offer-menu">
+                        <button class="btn btn-link navbar-brand-offer-btn" type="button">SERVICES</button>
+                    </div>
+                    <div class="mim-HomeSideMenu">
+                        <ul>
+                            @foreach (var cat in catServices.Skip(16).Take(17))
+                            {
+                                string icon = $"/FileManager/CategoryIcons/Second/{cat.URL}" + ".png";
+
+                                <li class="mim-box-list">
+                                    <a href="~/Third/@cat.URL" title="@cat.SearchKeywordName">
+                                        <img src="@icon" alt="@cat.SearchKeywordName" class="img-fluid">
+                                        @cat.Name
+                                    </a>
+                                </li>
+                            }
+                            <li class="mim-box-list">More >></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-md-12 brand-category-list">
+                    <div class="navbar-brand-offer">
+                        @*<div class="navbar-brand-offer-list">
+                            <ul class="nav nav-tabs" id="tab_checkout" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="cutomize-tab" data-toggle="tab" href="#cutomize" role="tab" aria-controls="cutomize" aria-selected="true">Cutomize Services</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="monopoly-tab" data-toggle="tab" href="#monopoly" role="tab" aria-controls="monopoly" aria-selected="false">Monopoly Services</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="latest-tab" data-toggle="tab" href="#latest" role="tab" aria-controls="latest" aria-selected="false">Latest Projects</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="running-tab" data-toggle="tab" href="#running" role="tab" aria-controls="running" aria-selected="false">Running Projects</a>
+                                </li>
+                            </ul>
+                        </div>*@
+                    </div>
+                    <div class="mim-Box">
+                        <div class="row no-gutters">
+                            <div class="col-md-4 mim-Box-img">
+                                <img src="~/banners/011-600-x-900.jpg" class="img-fluid">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="tab-content checkout" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="cutomize" role="tabpanel" aria-labelledby="cutomize">
+                                        <div class="row no-gutters">
+                                            @foreach (var cat in catServices.Take(16))
+                                            {
+                                                string icon = $"/FileManager/CategoryIcons/Second/{cat.URL}" + ".png";
+
+                                                <div class="col-md-3 col-sm-3 col-3 mim-Box-item">
+                                                    <a href="~/Third/@cat.URL">
+                                                        <img src="@icon" class="img-fluid">
+                                                        <p>@cat.Name</p>
+                                                    </a>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="monopoly" role="tabpanel" aria-labelledby="monopoly">
+                                        dasd1a231d31sad
+                                    </div>
+                                    <div class="tab-pane fade" id="latest" role="tabpanel" aria-labelledby="latest">
+                                        dasd1a231d31sad
+                                    </div>
+                                    <div class="tab-pane fade" id="running" role="tabpanel" aria-labelledby="running">
+                                        dasd1a231d31sad
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- category end -->
+    <!--Category Banner Start-->
+    <div class="banner-block">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/banners/005-1600-x-600.jpg" alt="">
+                    </figure>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/banners/006-1600-x-600.jpg" alt="">
+                    </figure>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--Category Banner Start-->
+    <!-- category start -->
+    <div class="category-featured">
+        <div class="show-brand">
+            <div class="row">
+                <div class="col-lg-2 col-md-12 category-list">
+                    <div class="navbar-brand">
+                        <button class="btn btn-link navbar-brand-btn" type="button">CONTRACTORS</button>
+                    </div>
+                    <div class="navbar-brand-offer-menu">
+                        <button class="btn btn-link navbar-brand-offer-btn" type="button">CONTRACTORS</button>
+                    </div>
+                    <div class="mim-HomeSideMenu">
+                        <ul>
+                            @foreach (var cat in catContractors.Skip(16).Take(17))
+                            {
+                                string icon = $"/FileManager/CategoryIcons/Second/{cat.URL}" + ".png";
+
+                                <li class="mim-box-list">
+                                    <a href="~/Third/@cat.URL" title="@cat.SearchKeywordName">
+                                        <img src="@icon" alt="@cat.SearchKeywordName" class="img-fluid">
+                                        @cat.Name
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-md-12 brand-category-list">
+                    <div class="navbar-brand-offer">
+                        @*<div class="navbar-brand-offer-list">
+                            <ul class="nav nav-tabs" id="tab_checkout" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="cutomizework-tab" data-toggle="tab" href="#cutomizework" role="tab" aria-controls="cutomizework" aria-selected="true">Cutomize work</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="monopolycontractors-tab" data-toggle="tab" href="#monopolycontractors" role="tab" aria-controls="monopolycontractors" aria-selected="false">Monopoly work</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="unique-tab" data-toggle="tab" href="#unique" role="tab" aria-controls="unique" aria-selected="false">Unique Projects</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="latestcontractors-tab" data-toggle="tab" href="#latestcontractors " role="tab" aria-controls="latestcontractors" aria-selected="false">Latest Projects</a>
+                                </li>
+                            </ul>
+                        </div>*@
+                    </div>
+                    <div class="mim-Box">
+                        <div class="row no-gutters">
+                            <div class="col-md-4 mim-Box-img">
+                                <img src="~/banners/010-600-x-900.jpg" class="img-fluid">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="tab-content checkout" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="cutomizework" role="tabpanel" aria-labelledby="cutomizework">
+                                        <div class="row no-gutters">
+                                            @foreach (var cat in catContractors.Take(16))
+                                            {
+                                                string icon = $"/FileManager/CategoryIcons/Second/{cat.URL}" + ".png";
+                                                <div class="col-md-3 col-sm-3 col-3 mim-Box-item">
+                                                    <a href="~/Third/@cat.URL">
+                                                        <img src="@icon" class="img-fluid">
+                                                        <p>@cat.Name</p>
+                                                    </a>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="monopolycontractors" role="tabpanel" aria-labelledby="monopolycontractors">
+                                        Monopoly work
+                                    </div>
+                                    <div class="tab-pane fade" id="unique" role="tabpanel" aria-labelledby="unique">
+                                        Unique Projects
+                                    </div>
+                                    <div class="tab-pane fade" id="latestcontractors" role="tabpanel" aria-labelledby="latestcontractors">
+                                        Latest Projects
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- category end -->
+    <!--Category Banner Start-->
+    <div class="banner-block">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/banners/007-1600-x-600.jpg" alt="">
+                    </figure>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/banners/008-1600-x-600.jpg" alt="">
+                    </figure>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--Category Banner Start-->
+    <!-- category start -->
+    <div class="category-featured">
+        <div class="show-brand">
+            <div class="row">
+                <div class="col-lg-2 col-md-12 category-list">
+                    <div class="navbar-brand">
+                        <button class="btn btn-link navbar-brand-btn" type="button">DEALERS</button>
+                    </div>
+                    <div class="navbar-brand-offer-menu">
+                        <button class="btn btn-link navbar-brand-offer-btn" type="button">DEALERS</button>
+                    </div>
+                    <div class="mim-HomeSideMenu">
+                        <ul>
+                            @foreach (var cat in catDealers.Skip(16).Take(17))
+                            {
+                                string icon = $"/FileManager/CategoryIcons/Second/{cat.URL}" + ".png";
+
+                                <li class="mim-box-list">
+                                    <a href="~/Third/@cat.URL" title="@cat.SearchKeywordName">
+                                        <img src="@icon" alt="@cat.SearchKeywordName" class="img-fluid">
+                                        @cat.Name
+                                    </a>
+                                </li>
+                            }
+                            <li class="mim-box-list">More >></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-md-12 brand-category-list">
+                    <div class="navbar-brand-offer">
+                        @*<div class="navbar-brand-offer-list">
+                            <ul class="nav nav-tabs" id="tab_checkout" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="cutomizeworkdealers-tab" data-toggle="tab" href="#cutomizeworkdealers" role="tab" aria-controls="cutomizeworkdealers" aria-selected="true">Customized Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="monoploydealers-tab" data-toggle="tab" href="#monoploydealers" role="tab" aria-controls="monoploydealers" aria-selected="false">Monopoly Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="latestdealers-tab" data-toggle="tab" href="#latestdealers" role="tab" aria-controls="latestdealers" aria-selected="false">Latest Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="imported-tab" data-toggle="tab" href="#imported " role="tab" aria-controls="imported" aria-selected="false">Imported Products</a>
+                                </li>
+                            </ul>
+                        </div>*@
+                    </div>
+                    <div class="mim-Box">
+                        <div class="row no-gutters">
+                            <div class="col-md-4 mim-Box-img">
+                                <img src="~/banners/009-600-x-900.jpg"class="img-fluid">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="tab-content checkout" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="cutomizeworkdealers" role="tabpanel" aria-labelledby="cutomizeworkdealers">
+                                        <div class="row no-gutters">
+                                            @foreach (var cat in catContractors.Take(16))
+                                            {
+                                                string icon = $"/FileManager/CategoryIcons/Second/{cat.URL}" + ".png";
+                                                <div class="col-md-3 col-sm-3 col-3 mim-Box-item">
+                                                    <a href="~/Third/@cat.URL">
+                                                        <img src="@icon" class="img-fluid">
+                                                        <p>@cat.Name</p>
+                                                    </a>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="monoploydealers" role="tabpanel" aria-labelledby="monoploydealers">
+                                        Monopoly Dealers
+                                    </div>
+                                    <div class="tab-pane fade" id="latestdealers" role="tabpanel" aria-labelledby="latestdealers">
+                                        Latest Dealers
+                                    </div>
+                                    <div class="tab-pane fade" id="imported" role="tabpanel" aria-labelledby="imported">
+                                        Imported Dealers
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- category end -->
+    <!--Category Banner Start-->
+    @*<div class="banner-block">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/FrontEnd/img/hero_in_shop_detail.jpg" alt="">
+                    </figure>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 banner-space">
+                <a href="#" class="grid_item small">
+                    <figure>
+                        <img src="~/FrontEnd/img/hero_in_shop_detail.jpg" alt="">
+                    </figure>
+                </a>
+            </div>
+        </div>
+    </div>*@
+    <!--Category Banner Start-->
+</div>

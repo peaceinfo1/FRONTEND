@@ -1,0 +1,154 @@
+﻿@inject BAL.Listings.IListingManager listingManager
+
+@{
+    ViewData["Title"] = "Images";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+<!-- Begin: Create history -->
+@await Component.InvokeAsync("UserHistory")
+<!-- End: -->
+<!-- Begin: Breadcrumb -->
+@{
+    ViewData["BC-1"] = "Subscriptions";
+    ViewData["BC-2"] = "Listings";
+    ViewData["BC-3"] = ViewData["Title"];
+    ViewData["BT-Text"] = "Add New Listing";
+    ViewData["BT-Link"] = "/Subscriptions/Listings/Create";
+    ViewData["BT-Text2"] = "Manage Listings";
+    ViewData["BT-Link2"] = "/Subscriptions/Listings/Index";
+}
+<!-- End: -->
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-2" style="padding-left:0px; margin-left:0px;">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Company
+                    <span class="badge badge-success badge-pill">1</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Communication
+                    <span class="badge badge-success badge-pill">2</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Address
+                    <span class="badge badge-success badge-pill">3</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Categories
+                    <span class="badge badge-success badge-pill">4</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Specialisation
+                    <span class="badge badge-success badge-pill">5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Working Hours
+                    <span class="badge badge-success badge-pill">6</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Payment Details
+                    <span class="badge badge-success badge-pill">7</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center active">
+                    Images
+                    <span class="badge badge-secondary badge-pill">8</span>
+                </li>
+                @*<li class="list-group-item d-flex justify-content-between align-items-center">
+                        Neighborhood
+                        <span class="badge badge-secondary badge-pill">8</span>
+                    </li>*@
+            </ul>
+        </div>
+
+        <div class="col-lg-10">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>@ViewData["Title"]</h4>
+                    <hr />
+                    <div class="row" style="text-align:center;">
+                        <div class="col-12 col-sm-12 col-lg-2 col-xl-2">
+                            <h3 class="card-title mb-1 mt-1 pt-2">Owner Photo</h3>
+                            <br />
+                            @if (listingManager.OwnerPhotoExists(ViewBag.ListingID) == true)
+                            {
+                                string thumbnailUrl = $"/FileManager/ListingOwnerPhoto/{ViewBag.ListingID}.jpg";
+                                <div style="width:100%; border:1px solid #e0e0e0; text-align:center; height:200px;">
+                                    <img src="@thumbnailUrl" style="margin-bottom:15px;" width="200" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width:100%; border:1px solid #e0e0e0; background-color:#efefef; text-align:center; padding-top:20%; height:200px;">
+                                    Photo Size<br />200px * 200px<br /><br /><strong>*.jpg format</strong>
+                                </div>
+                            }
+                            <hr />
+                            <form asp-action="ListingOwnerPhoto" asp-controller="ListingFileManager" asp-area="Subscriptions" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="listingId" value="@ViewBag.ListingID" required />
+                                <input type="file" name="file" accept="image/jpeg" required />
+                                <br /><br />
+                                <button type="submit" class="btn btn-primary btn-sm btn-block">Upload</button>
+                            </form>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-lg-2 col-xl-2">
+                            <h3 class="card-title mb-1 mt-1 pt-2">Company Logo</h3>
+                            <br />
+                            @if (listingManager.LogoExists(ViewBag.ListingID) == true)
+                            {
+                                string logoUrl = $"/FileManager/ListingLogo/{ViewBag.ListingID}.jpg";
+                                <div style="width:100%; border:1px solid #e0e0e0; text-align:center; height:200px;">
+                                    <img src="@logoUrl" style="margin-bottom:15px;" width="200" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width:100%; border:1px solid #e0e0e0; background-color:#efefef; text-align:center; padding-top:20%; height:200px;">
+                                    Photo Size<br />200px * 200px<br /><br /><strong>*.jpg format</strong>
+                                </div>
+                            }
+                            <hr />
+                            <form asp-action="UploadListingLogo" asp-controller="ListingFileManager" asp-area="Subscriptions" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="listingId" value="@ViewBag.ListingID" required />
+                                <input type="file" name="file" accept="image/jpeg" required />
+                                <br /><br />
+                                <button type="submit" class="btn btn-primary btn-sm btn-block">Upload</button>
+                            </form>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-lg-2 col-xl-2">
+                            <h3 class="card-title mb-1 mt-1 pt-2">Thumbnail</h3>
+                            <br />
+                            @if (listingManager.ThumbnailExists(ViewBag.ListingID) == true)
+                            {
+                                string thumbnailUrl = $"/FileManager/ListingThumbnail/{ViewBag.ListingID}.jpg";
+                                <div style="width:100%; border:1px solid #e0e0e0; text-align:center; height:200px;">
+                                    <img src="@thumbnailUrl" style="margin-bottom:15px;" width="200" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="width:100%; border:1px solid #e0e0e0; background-color:#efefef; text-align:center; padding-top:20%; height:200px;">
+                                    Photo Size<br />200px * 200px<br /><br /><strong>*.jpg format</strong>
+                                </div>
+                            }
+                            <hr />
+                            <form asp-action="UploadListingThumbnail" asp-controller="ListingFileManager" asp-area="Subscriptions" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="listingId" value="@ViewBag.ListingID" required />
+                                <input type="file" name="file" accept="image/jpeg" required />
+                                <br /><br />
+                                <button type="submit" class="btn btn-primary btn-sm btn-block">Upload</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 text-center" style="margin-top:50px;">
+                            <a href="~/Subscriptions/Listings/Index" class="btn btn-success">Save & Finish</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,356 @@
+﻿@model IDENTITY.Models.ViewModels.UserMobileViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Account.cshtml";
+}
+
+@section CSS{
+    <link href="~/css/mim-authorization-pages.css" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts{
+    <!-- Shafi: jQuery Reference -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- End: -->
+    <script type="text/javascript">
+        /* Shafi: Hide at startup */
+        $("#otpForm").hide();
+        $("#passwordForm").hide();
+        /* End: */
+
+        /* Shafi: Registration Form */
+        $("#registerButton").click(function () {
+            /* Shafi: Create variable for countryCode and Mobile */
+            var countryCode = $("#countryCode").find(":selected").val();
+            var mobileNumber = $("#mobileNumber").val();
+            /* End: */
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Register", "Account", new { area = "" })',
+                dataType: 'json',
+                data: {
+                    countryCode: countryCode,
+                    mobile: mobileNumber
+                },
+                success: function (otpData) {
+                    /* Shafi: Parse data into Json */
+                    otpData = JSON.parse(otpData);
+                    /* End: */
+                    /* Shafi: If data.Status == Success executive this */
+                    if (otpData.Status == "Success") {
+                        /* Shafi: Hide registerForm And Get OTP Value */
+                        $("#registerForm").hide();
+                        /* End: */
+                        /* Shafi: On Verify OTP click execute this */
+                        $("#verifyOtp").click(function () {
+                            /* Begin: Get OTP input values */
+                            var otp1 = $("#otp1").val();
+                            var otp2 = $("#otp2").val();
+                            var otp3 = $("#otp3").val();
+                            var otp4 = $("#otp4").val();
+                            var otp5 = $("#otp5").val();
+                            var otp6 = $("#otp6").val();
+                        /* End: */
+                        /* Begin: Merge OTP Inputs */
+                            if (otp1 != null && otp2 != null && otp3 != null && otp4 != null && otp5 != null && otp6 != null) {
+                                /* Shafi: Merge OTP Values */
+                                var otpValues = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
+                                /* End: */
+                                if ($("#otp").val() != null && mobileNumber != null) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '@Url.Action("OTPConfirmation", "Account", new { area = "" })',
+                                        dataType: 'json',
+                                        data: {
+                                            otp: otpValues,
+                                            mobile: otpData.Mobile,
+                                            otpId: otpData.OtpId
+                                        },
+                                        success: function (otpStatus) {
+                                            if (otpStatus == "Success") {
+
+                                                // Shafi: Hide passwordForm
+                                                $("#otpForm").fadeOut(1000);
+                                                // End:
+
+                                                /* Shafi: Show password form */
+                                                $("#passwordForm").fadeIn(1000, function () {
+                                                    /* Shafi: On Register Button click execute this */
+                                                $("#setPassword").click(function () {
+                                                    // Shafi: Get user details
+                                                    var email = $("#email").val();
+                                                    var password = $("#password").val();
+                                                    var confirmPassword = $("#confirmPassword").val();
+                                                    // End:
+
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: '@Url.Action("PasswordConfirmation", "Account", new { area = "" })',
+                                                        dataType: 'json',
+                                                        data: {
+                                                            otpId: otpData.OtpId,
+                                                            mobile: otpData.Mobile,
+                                                            email: email,
+                                                            password: password,
+                                                            confirmPassword: confirmPassword
+                                                        },
+                                                        success: function (userStatus) {
+                                                            // Shafi: Execute on the basis of userStatus
+                                                            if (userStatus == "Success") {
+                                                                // Shafi: Redirect to home page
+                                                                window.location.replace("/Profile/UserProfile/Create");
+                                                                // End:
+                                                            }
+                                                            else {
+                                                                alert(userStatus);
+                                                            }
+                                                            // End:
+                                                        },
+                                                        error: function (ex) {
+                                                            alert(ex);
+                                                        }
+                                                    });
+                                                })
+                                                /* End: */
+                                                });
+                                                /* End: */
+                                            }
+                                            else {
+                                                alert(otpStatus);
+                                            };
+                                        },
+                                        error: function (ex) {
+                                            $("#error").fadeIn(1000);
+                                            $("#error").html("Cannot fetch data, error is " + ex);
+                                        }
+                                    });
+                                    return false;
+                                }
+                            }
+                            else {
+                                alert("6 Digit OTP Required");
+                            }
+                        /* End: */
+                        })
+                        /* End: */
+                        /* Shafi: Show OTP Form */
+                        $("#otpForm").fadeIn(1000);
+                        /* End: */
+                    };
+                    if (otpData.Status != "Success") {
+                        alert(otpData.Status);
+                    };
+                    /* End: */
+                },
+                error: function (ex) {
+                    $("#error").fadeIn(1000);
+                    $("#error").html("Cannot fetch data, error is " + ex);
+                }
+            });
+        })
+        /* End: */
+
+
+    </script>
+
+    <!-- Shafi: 6 Digit OTP Input -->
+    <script>
+        var container = document.getElementsByClassName("MIM-OTP-Box")[0];
+        container.onkeyup = function (e) {
+            var target = e.srcElement;
+            var maxLength = parseInt(target.attributes["maxlength"].value, 10);
+            var myLength = target.value.length;
+            if (myLength >= maxLength) {
+                var next = target;
+                while (next = next.nextElementSibling) {
+                    if (next == null)
+                        break;
+                    if (next.tagName.toLowerCase() == "input") {
+                        next.focus();
+                        break;
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- End: -->
+
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@if (ViewBag.Cookie != null)
+{
+    <h1>@ViewBag.Cookie</h1>
+}
+
+<div class="row justify-content-center account-form">
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-2 umar-account-form-border">
+        <a href="~/" title="UMARZONE">
+            <img src="~/img/my-interior-mart-logo.png" class="logo" />
+        </a>
+        <!-- Shafi: Register Form -->
+        <div id="registerForm">
+            <h1>REGISTER</h1>
+            <!-- Begin: Hidden fields -->
+            <span asp-validation-summary="All" class="umar-error"></span>
+            <!-- End: -->
+            <select id="countryCode" class="umar-input" placeholder="Country Code">
+                <option value="91">+91-</option>
+                <option value="44">+44-</option>
+                <option value="92">+92-</option>
+                <option value="166">+166-</option>
+            </select>
+            <input id="mobileNumber" class="umar-input" placeholder="Mobile" />
+            <div style="display:flex">
+                <div>
+                    <input asp-for="AcceptTerms" required>
+                </div>
+                <div class="checkbox-text">
+                    <span class="float-start">Accept Terms</span>
+                </div>
+            </div>
+            <button id="registerButton">Register</button>
+        </div>
+        <!-- End: -->
+        <!-- Shafi: OTP Form -->
+        <div id="otpForm">
+            <h1>OTP Verification</h1>
+            <div class="MIM-OTP-Box">
+                <span id="error" style="content:'\n'; white-space:pre;"></span>
+                <input type="text" id="otp" placeholder="OTP" hidden class="form-control" />
+                <input asp-for="Mobile" id="mobile" hidden value="@ViewBag.MIMMobile" class="umar-input" placeholder="@ViewBag.MIMMobile" />
+                <input type="number" id="otp1" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp2" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp3" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp4" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp5" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+                <input type="number" id="otp6" class="umar-otp-input MIM-OTP-Number" maxlength="1" />
+            </div>
+            <button id="verifyOtp" style="width:200px;">Verify</button>
+            <p class="mt-4" style="border-top:1px solid #C6C6C6; padding-top:10px;">Didn’t Receive OTP? <br /> <a href="#0" style="color:#2459A3;">Resend Link</a></p>
+        </div>
+        <!-- End: OTP -->
+        <!-- Shafi: Confirm Password -->
+        <div id="passwordForm">
+            <h6>Username: <span class="ml-1"></span></h6>
+            <input type="text" id="email" class="umar-input" placeholder="Email Optional" />
+            <input type="password" id="password" class="umar-input" placeholder="Password" />
+            <input type="password" id="confirmPassword" class="umar-input" placeholder="Confirm Password" />
+            <button id="setPassword">Register</button>
+        </div>
+        <!-- End: -->
+        <h2 class="umar-h2 mt-4">
+            ALREADY REGISTERED! LOGIN BY
+        </h2>
+        <div class="d-flex flex-row justify-content-center umar-account-footer">
+            <div class="umar-icons">
+                <img src="~/img/account-form/mobile.svg" />
+                <a href="~/Account/Login">Mobile</a>
+            </div>
+            <div class="umar-icons">
+                <img src="~/img/account-form/email.svg" />
+                <a href="#">Email</a>
+            </div>
+            <div class="umar-icons">
+                <img src="~/img/account-form/link.svg" />
+                <a href="~/Account/LoginWithLink">Link</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<h1>@ViewData["Title"]</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <h4>Create a new account.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+        <div class="col-md-6 col-md-offset-2">
+            <section>
+                <h4>Use another service to register.</h4>
+                <hr />
+                @{
+                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                    {
+                        <div>
+                            <p>
+                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                            <div>
+                                <p>
+                                    @foreach (var provider in Model.ExternalLogins)
+                                    {
+                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    }
+                                </p>
+                            </div>
+                        </form>
+                    }
+                }
+            </section>
+        </div>
+    </div>*@
+
+
+
+
+@*// Shafi: Get user details
+                                                    var email = $("#email").val();
+                                                    var password = $("#password").val();
+                                                    var confirmPassword = $("#confirmPassword").val();
+                                                    // End:
+
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: '@Url.Action("PasswordConfirmation", "Account", new { area = "" })',
+                                                        dataType: 'json',
+                                                        data: {
+                                                        otpId: otpData.OtpId,
+                                                        mobile: otpData.Mobile,
+                                                        email: email,
+                                                        password: password,
+                                                        confirmPassword: confirmPassword
+                                                        },
+                                                        success: function (userStatus) {
+                                                        // Shafi: Execute on the basis of userStatus
+                                                        if (userStatus == "Success") {
+                                                        alert(userStatus);
+                                                        }
+                                                        else {
+                                                        alert(userStatus);
+                                                        }
+                                                        // End:
+                                                        },
+                                                        error: function (ex) {
+                                                        alert(ex);
+                                                        }
+                                                        });*@
