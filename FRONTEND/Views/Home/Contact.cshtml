@@ -1,0 +1,163 @@
+﻿@model BOL.AUDITTRAIL.Contact
+
+@{
+    ViewData["Title"] = "Contact Us | My interior Mart";
+    ViewData["Description"] = "India's First Construction & Interior Local Search Engine Find Verified & Genuine Professionals, Services, Contractors, Dealers, Manufactures, Nearby.";
+    ViewData["Keywords"] = "We are India's First Construction & Interior Search Engine Find Verified & Genuine Professionals, Contractors, Dealers, Suppliers, Manufactures, Consultants, Developer-Builder, Architects, Land Surveyors, Labor Contractors, Dealers, Wholesale, Exporter, Importer, Electricians, Plumbers, Air conditioner, Boilers, Lift, Sofa & Chair, Carpentry, Mattress, Doors, Windows, Automation,  CCTV Camera, Weighing Machine, Civil Work, False Ceiling, Modular Kitchen, Sing board, LED Screen, Intercom Phone, EPBX Landline, Ms Grill, Awning, Window  Net Shutter, Water Pump, Blinds, Plaster of Paris, Design, Legal Advisory, Security, Web Developer, Automation, CCTV Camera, On Hire, Pest Control, Cleaning, Transporters, Advertisement, Packer & Movers, Metal Coating, Polishing, Netting, Real Estate Agent, Printing, Consultancy, Wood Carving, Packaging, Metal Bending, Pump Installation, Solar Panel Installation, Tank Cleaning, Water Supply, Garden, Construction, Civil, Interior, Plumbing, Electrical, False Ceiling, Aluminum Fabrication, Pop, Air conditioner, Ducting System, Furniture, Painting, Furniture Polishing, Waterproofing, Fire Fighting, Ms Fabricator, Steel Fabricators, Glass Fabrication, False Flooring, Debris Removal, Core Cutting, Bore well, Floor Polishing, Demolition, Drainage, Bituminous Coating, Wallpaper, Building Material, Pop & Gypsum, Electrical, Plumbing, Tile, Bathroom Fitting, Plywood, Laminate & Veneers, Hardware, Metal, Glass, Acrylic Sheet, Modular Kitchen, Wallpaper, False Flooring, Lighting, Furniture, Furnishing, Mattress, Paint & Polish, Sofa & Chair, Granite & Stone, Paver Block, Stationery, Corporate Gift, Decorative Panel, Packaging Material, Modular Furniture, Window & Doors, Sofa & Chairs, Mattress, False Flooring, Porta Cabin, Board, Elevators, Tile, Construction Material, Pop & Gypsum, Bathroom Fitting, Plywood, Veneer & Laminates, Wallpaper, Signage, Paint & Polish, Modular Kitchen, Safety Product, Construction Chemical, Water Tank, Drainage System, Net, Awning & Canopy, Blinds, Promotional Products, False Ceiling, Stationery, Packaging Box, Corporate Gift.";
+    Layout = "~/Views/Shared/Frontend-New/_SearchResult.cshtml";
+}
+
+@section Scripts{
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+}
+
+<div class="container">
+    <div class="margin_60_35">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-5 col-lg-6 pr-xl-5">
+                <div class="main_title_3 mb-3">
+                    <span></span>
+                    <h2>Send us a message</h2>
+                </div>
+                <div id="message-contact"></div>
+                <form method="post" action="assets/contact.php" id="contactform" autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input class="form-control" type="text" id="name_contact" name="name_contact">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Last name</label>
+                                <input class="form-control" type="text" id="lastname_contact" name="lastname_contact">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input class="form-control" type="email" id="email_contact" name="email_contact">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Telephone</label>
+                                <input class="form-control" type="text" id="phone_contact" name="phone_contact">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea class="form-control" id="message_contact" name="message_contact" style="height:150px;"></textarea>
+                    </div>
+                    <p class="add_top_30"><input type="submit" value="Submit" class="btn_1 rounded" id="submit-contact"></p>
+                </form>
+            </div>
+            <div class="col-xl-5 col-lg-6 pl-xl-5">
+                <div class="box_contacts">
+                    <i class="ti-support"></i>
+                    <h2>Need Help?</h2>
+                    <a href="tel:+911324567890">+91 1324567890</a> - <a href="mailto:info@myinteriormart.com">info@myinteriormart.com</a>
+                </div>
+                <div class="box_contacts">
+                    <i class="ti-home"></i>
+                    <h2>Address</h2>
+                    <a href="#0">F-306 1st Floor Dream's The Mall, Lal Bahadur Shastri Rd, Bhandup West, Mumbai, Maharashtra 400078</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="container margin_60_35">
+    <div class="row justify-content-center">
+        <div class="col-xl-5 col-lg-6 pr-xl-5">
+            <div class="main_title_3">
+                <span></span>
+                <h2>Contact Us</h2>
+                <p>Your happiness is what matters</p>
+            </div>
+            <div id="message-contact"></div>
+            form method="post" action="contact" id="contactform" autocomplete="off">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Date" type="hidden" value="@DateTime.Now" />
+                <input asp-for="IPAddress" type="hidden" value="192.168.1.1" />
+                <input asp-for="City" type="hidden" value="Mumbai" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+                <span asp-validation-for="IPAddress" class="text-danger"></span>
+                <span asp-validation-for="City" class="text-danger"></span>
+                @@if (TempData["Message"] != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @@TempData["Message"]
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /row -->
+                <!--<div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Mobile" class="control-label"></label>
+                            <input asp-for="Mobile" class="form-control" />
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>-->
+                <!-- /row -->
+                <!--<div class="form-group">
+                    <label asp-for="Message" class="control-label"></label>
+                    <textarea asp-for="Message" class="form-control"></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="h-captcha" data-sitekey="7d18869e-4fbe-4b5d-9c62-4c42ad1ac9a5"></div>-->
+                            @*<label>Are you human? 3 + 1 =</label>
+                                <input class="form-control" type="text" id="verify_contact" name="verify_contact">*@
+                        @*</div>
+                    </div>
+                </div>
+                <p class="add_top_30"><input type="submit" value="Send" class="btn btn-primary" /></p>
+            </form>
+        </div>
+        <div class="col-xl-5 col-lg-6 pl-xl-5">
+            <div class="box_contacts">
+                <i class="ti-support"></i>
+                <h2>Need Help?</h2>
+                <a href="tel:7700995500">+91-7700995500</a> - <a href="mailto:info@myinteriormart.com">info@myinteriormart.com</a>
+            </div>
+            <div class="box_contacts">
+                <i class="ti-help-alt"></i>
+                <h2>Book Advertisement</h2>
+                <a href="tel:7700994015">+91-7700994015</a> - <a href="mailto:sales@myinteriormart.com">sales@myinteriormart.com</a>
+            </div>
+            <div class="box_contacts">
+                <i class="ti-home"></i>
+                <h2>Address</h2>
+                <a href="#0">Perl Residence Office No.22, Opp Wadia School, D.N.Nagar, Andheri West, Mumbai, Maharashtra 400053.</a>
+            </div>
+        </div>
+    </div>
+</div>-->*@

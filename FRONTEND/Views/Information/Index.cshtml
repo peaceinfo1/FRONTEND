@@ -1,0 +1,21 @@
+﻿@model BOL.CATEGORIES.Pages
+
+@{
+    ViewData["Title"] = Model.PageName;
+    Layout = "~/Views/Shared/Frontend/_ListingDetails.cshtml";
+}
+
+<aside class="col-lg-3" id="sidebar">
+    <div class="mim-Box mim-SideBoxList" style="margin-top:-10px;">
+        <h6>Quick Links</h6>
+        <ul class="links">
+            @await Component.InvokeAsync("CmsFooterMenuOne")
+        </ul>
+    </div>
+</aside>
+<div class="col-lg-9">
+    <div class="strip" style="box-shadow:none; padding:20px; margin-top:-7px; margin-left:-10px;">
+        <h3>@Model.PageName</h3>
+        <p style="text-align: justify; font-size: 15px; line-height: 26px;">@Model.Description</p>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<BOL.PLAN.Subscription>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ListingID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IPAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentMethod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Period)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ListingID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerGuid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IPAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentMethod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Plan.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Period.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SubscriptionID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SubscriptionID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SubscriptionID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

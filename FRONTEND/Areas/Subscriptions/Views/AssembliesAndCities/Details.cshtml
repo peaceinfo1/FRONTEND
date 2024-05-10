@@ -1,0 +1,61 @@
+﻿@model BOL.LISTING.AssembliesAndCities
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>AssembliesAndCities</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ListingID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ListingID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OwnerGuid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OwnerGuid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IPAddress)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IPAddress)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CountryID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CountryID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StateID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StateID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CityIDs)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CityIDs)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AssemblyIDs)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AssemblyIDs)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.AssemblyAndCityID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

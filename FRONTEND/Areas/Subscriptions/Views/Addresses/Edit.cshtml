@@ -1,0 +1,77 @@
+﻿@model BOL.LISTING.Address
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Address</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AddressID" />
+            <div class="form-group">
+                <label asp-for="ListingID" class="control-label"></label>
+                <input asp-for="ListingID" class="form-control" />
+                <span asp-validation-for="ListingID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OwnerGuid" class="control-label"></label>
+                <input asp-for="OwnerGuid" class="form-control" />
+                <span asp-validation-for="OwnerGuid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IPAddress" class="control-label"></label>
+                <input asp-for="IPAddress" class="form-control" />
+                <span asp-validation-for="IPAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CountryID" class="control-label"></label>
+                <input asp-for="CountryID" class="form-control" />
+                <span asp-validation-for="CountryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StateID" class="control-label"></label>
+                <input asp-for="StateID" class="form-control" />
+                <span asp-validation-for="StateID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AssemblyID" class="control-label"></label>
+                <input asp-for="AssemblyID" class="form-control" />
+                <span asp-validation-for="AssemblyID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PincodeID" class="control-label"></label>
+                <input asp-for="PincodeID" class="form-control" />
+                <span asp-validation-for="PincodeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocalityID" class="control-label"></label>
+                <input asp-for="LocalityID" class="form-control" />
+                <span asp-validation-for="LocalityID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocalAddress" class="control-label"></label>
+                <input asp-for="LocalAddress" class="form-control" />
+                <span asp-validation-for="LocalAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

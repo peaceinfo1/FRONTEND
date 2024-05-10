@@ -1,0 +1,587 @@
+﻿@inject BAL.Listings.IListingManager listingManager
+@inject BAL.Services.Contracts.IUserProfileService userProfileService
+@inject BAL.Addresses.IAddresses addressRepo
+
+@using BOL.VIEWMODELS.Dashboards
+@using Humanizer
+@using System.Text
+
+@{
+    ViewData["Title"] = "Dashboard - " + ViewBag.ListingID;
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<!-- Begin: Create history -->
+@await Component.InvokeAsync("UserHistory", "Viewed listing with ID " + ViewBag.ListingID)
+<!-- End: -->
+<!-- Begin: Breadcrumb -->
+@{
+    ViewData["BC-1"] = "Subscriptions";
+    ViewData["BC-2"] = "Listings";
+    ViewData["BC-3"] = ViewData["Title"];
+    ViewData["BT-Text"] = "Add New Listing";
+    ViewData["BT-Link"] = "/Subscriptions/Listings/Create";
+    ViewData["BT-Text2"] = "Manage Listings";
+    ViewData["BT-Link2"] = "/Subscriptions/Listings/Index";
+}
+<!-- End: -->
+@section CSS {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+}
+
+@{
+
+    /* Begin: DI */
+    var company = listingManager.CompanyExists(ViewBag.ListingID);
+    var communication = listingManager.CompanyExists(ViewBag.ListingID);
+    var social = listingManager.SocialExists(ViewBag.ListingID);
+    var certification = listingManager.CertificationsExists(ViewBag.ListingID);
+    var profile = listingManager.ProfileExists(ViewBag.ListingID);
+    var payment = listingManager.PaymentExists(ViewBag.ListingID);
+    var working = listingManager.WorkingExists(ViewBag.ListingID);
+    var specialisation = listingManager.SpecialisationExists(ViewBag.ListingID);
+    var branch = listingManager.BranchesExists(ViewBag.ListingID);
+    /* End: DI */
+
+    /* Begin: CSS Class */
+    string companyClass;
+    string communicationClass;
+    string socialClass;
+    string certificationClass;
+    string profileClass;
+    string paymentClass;
+    string workingClass;
+    string specialisationClass;
+    string branchClass;
+    /* End: */
+
+    if (company == true) { companyClass = "wd-1000-f"; } else { companyClass = "wd-1"; };
+    if (communication == true) { communicationClass = "wd-1000-f"; } else { communicationClass = "wd-1"; }
+    if (social == true) { socialClass = "wd-1000-f"; } else { socialClass = "wd-1"; }
+    if (certification == true) { certificationClass = "wd-1000-f"; } else { certificationClass = "wd-1"; }
+    if (profile == true) { profileClass = "wd-1000-f"; } else { profileClass = "wd-1"; }
+    if (payment == true) { paymentClass = "wd-1000-f"; } else { paymentClass = "wd-1"; }
+    if (working == true) { workingClass = "wd-1000-f"; } else { workingClass = "wd-1"; }
+    if (specialisation == true) { specialisationClass = "wd-1000-f"; } else { specialisationClass = "wd-1"; }
+    if (branch == true) { branchClass = "wd-1000-f"; } else { branchClass = "wd-1"; }
+
+    /* Begin: Percentage */
+    int companyPercent;
+    int communicationPercent;
+    int socialPercent;
+    int certificationPercent;
+    int profilePercent;
+    int paymentPercent;
+    int workingPercent;
+    int specialisationPercent;
+    int branchPercent;
+    /* End: */
+
+    if (company == true) { companyPercent = 5; } else { companyPercent = 0; };
+    if (communication == true) { communicationPercent = 5; } else { communicationPercent = 0; }
+    if (social == true) { socialPercent = 5; } else { socialPercent = 0; }
+    if (certification == true) { certificationPercent = 5; } else { certificationPercent = 0; }
+    if (profile == true) { profilePercent = 5; } else { profilePercent = 0; }
+    if (payment == true) { paymentPercent = 5; } else { paymentPercent = 0; }
+    if (working == true) { workingPercent = 5; } else { workingPercent = 0; }
+    if (specialisation == true) { specialisationPercent = 5; } else { specialisationPercent = 0; }
+    if (branch == true) { branchPercent = 5; } else { branchPercent = 0; }
+
+    /* Begin: Total Percent */
+    int TotalPercent = companyPercent + communicationPercent + socialPercent + certificationPercent + profilePercent + paymentPercent + workingPercent + specialisationPercent + branchPercent;
+    /* End: */
+
+    // Begin: Get listing views and add to ViewModel listing
+    // create array of lat and long to display markers on map
+    var getListingViews = await listingManager.GetListingViewsAsync(ViewBag.ListingID);
+    // End:
+
+    // Shafi: Get past 30 days record for graph
+    var graphViews = await listingManager.GetLast30DaysListingViewsAsync(ViewBag.ListingID);
+    var graphLikes = await listingManager.GetLast30DaysListingLikeAsync(ViewBag.ListingID);
+    var graphSubscribes = await listingManager.GetLast30DaysListingSubscribesAsync(ViewBag.ListingID);
+    var graphBookmarks = await listingManager.GetLast30DaysListingBookmarksAsync(ViewBag.ListingID);
+    var graphReviews = await listingManager.GetLast30DaysListingReviewsAsync(ViewBag.ListingID);
+    // End:
+    // Shafi: Get listing view count by country
+    var listingViewByCountry = await listingManager.GetListingViewsCountByCountry(ViewBag.ListingID);
+    var listingViewByCurrentMonth = await listingManager.CountListingViewsByMonth(0, ViewBag.ListingID);
+    var listingViewByLastMonth = await listingManager.CountListingViewsByMonth(1, ViewBag.ListingID);
+    // End:
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="skill-bar mb-4 clearfix">
+            @{ string finalTotalPercent = TotalPercent.ToString() + "%"; }
+            <span>Listing @finalTotalPercent Complete</span>
+            <div class="progress mt-2">
+                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: @finalTotalPercent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-3 col-md-12 col-lg-4">
+        <div class="card">
+            <div class="card-header pb-1">
+                <h3 class="card-title mb-2">Company Logo</h3>
+                <br />
+                @if (listingManager.LogoExists(ViewBag.ListingID) == true)
+                {
+                    string logoUrl = $"/FileManager/ListingLogo/{ViewBag.ListingID}.jpg";
+                    <img src="@logoUrl" style="margin-bottom:15px;" />
+                }
+                <form asp-action="UploadListingLogo" asp-controller="ListingFileManager" asp-area="Subscriptions" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="listingId" value="@ViewBag.ListingID" required />
+                    <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg" required />
+                    <hr />
+                    <button type="submit" class="btn btn-primary btn-sm btn-block">Upload</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header pb-1">
+                <h3 class="card-title mb-2">Sales Activity</h3>
+                <p class="tx-12 mb-0 text-muted">Update following steps in order to complete listing.</p>
+            </div>
+            <div class="product-timeline card-body pt-2 mt-1">
+                <ul class="timeline-1 mb-0">
+                    <li class="mt-0">
+                        <i class="ti-pie-chart bg-primary-gradient text-white product-icon"></i>
+                        <!-- Begin: Update OR Create Button -->
+                        <span class="font-weight-semibold mb-4 tx-14 ">
+                            Company
+                            @if (company == true)
+                            {
+                                <a href="~/Subscriptions/Listings/Edit/@ViewBag.ListingID" style="font-size:12px; cursor:pointer; color:#0094ff;" title="Update">
+                                    <i class="fa fa-edit" style="font-size:10px; margin-left:5px; color:#0094ff;"></i>
+                                    Update
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="~/Subscriptions/Listings/Create" style="font-size:12px; cursor:pointer; color:#0094ff;" title="Update">
+                                    <i class="fa fa-edit" style="font-size:10px; margin-left:5px; color:#0094ff;"></i>
+                                    Create
+                                </a>
+                            }
+                        </span>
+                        <!-- End: -->
+                        <a href="#" class="float-right tx-11 text-muted">10%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient @companyClass"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="mdi mdi-phone bg-danger-gradient text-white product-icon"></i>
+                        <!-- Begin: Update OR Create Button -->
+                        <span class="font-weight-semibold mb-4 tx-14 ">
+                            Communications
+                            @if (communication == true)
+                            {
+                                <a href="~/Subscriptions/Communications/Edit/@ViewBag.ListingID" style="font-size:12px; cursor:pointer; color:#0094ff;" title="Update">
+                                    <i class="fa fa-edit" style="font-size:10px; margin-left:5px; color:#0094ff;"></i>
+                                    Update
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="~/Subscriptions/Communications/Create" style="font-size:12px; cursor:pointer; color:#0094ff;" title="Update">
+                                    <i class="fa fa-edit" style="font-size:10px; margin-left:5px; color:#0094ff;"></i>
+                                    Create
+                                </a>
+                            }
+                        </span>
+                        <!-- End: -->
+                        <a href="#" class="float-right tx-11 text-muted">20%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient @communicationClass"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="mdi mdi-map-marker bg-secondary-gradient text-white product-icon"></i> <span class="font-weight-semibold mb-4 tx-14 ">Address</span> <a href="#" class="float-right tx-11 text-muted">10%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient wd-1"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="mdi zmdi-network bg-teal-gradient text-white product-icon"></i> <span class="font-weight-semibold mb-4 tx-14 ">Categories</span> <a href="#" class="float-right tx-11 text-muted">10%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient wd-1"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="mdi mdi-facebook bg-success-gradient text-white product-icon"></i>
+                        <!-- Begin: Update OR Create Button -->
+                        <span class="font-weight-semibold mb-4 tx-14 ">
+                            Social Sites
+                            @if (social == true)
+                            {
+                                <a href="~/Subscriptions/SocialNetworks/Edit/@ViewBag.ListingID" style="font-size:12px; cursor:pointer; color:#0094ff;" title="Update">
+                                    <i class="fa fa-edit" style="font-size:10px; margin-left:5px; color:#0094ff;"></i>
+                                    Update
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="~/Subscriptions/SocialNetworks/Create" style="font-size:12px; cursor:pointer; color:#0094ff;" title="Update">
+                                    <i class="fa fa-edit" style="font-size:10px; margin-left:5px; color:#0094ff;"></i>
+                                    Create
+                                </a>
+                            }
+                        </span>
+                        <!-- End: -->
+                        <a href="#" class="float-right tx-11 text-muted">20%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient @socialClass"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="mdi mdi-file-document bg-warning-gradient text-white product-icon"></i> <span class="font-weight-semibold mb-4 tx-14 ">Certifications</span> <a href="#" class="float-right tx-11 text-muted">5%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient @certificationClass"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="si si-eye bg-purple-gradient text-white product-icon"></i> <span class="font-weight-semibold mb-4 tx-14 ">Profile</span> <a href="#" class="float-right tx-11 text-muted">5%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient @profileClass"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="mdi mdi-currency-inr bg-primary-gradient text-white product-icon"></i> <span class="font-weight-semibold mb-4 tx-14 ">Payment Details</span> <a href="#" class="float-right tx-11 text-muted">10%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient @paymentClass"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="mdi mdi-clock bg-pink-gradient text-white product-icon"></i> <span class="font-weight-semibold mb-4 tx-14 ">Working Hours</span> <a href="#" class="float-right tx-11 text-muted">10%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient @workingClass"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="mdi mdi-rocket bg-teal-gradient text-white product-icon"></i> <span class="font-weight-semibold mb-4 tx-14 ">Specialisation</span> <a href="#" class="float-right tx-11 text-muted">10%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient @specialisationClass"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0">
+                        <i class="mdi zmdi-google-maps bg-secondary-gradient text-white product-icon"></i> <span class="font-weight-semibold mb-4 tx-14 ">10 KM Range</span> <a href="#" class="float-right tx-11 text-muted">10%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient wd-1"></div>
+                        </div>
+                    </li>
+                    <li class="mt-0 mb-0">
+                        <i class="mdi mdi-source-branch bg-info-gradient text-white product-icon"></i> <span class="font-weight-semibold mb-4 tx-14 ">Branches</span> <a href="#" class="float-right tx-11 text-muted">10%</a>
+                        <div class="progress progress-sm mt-1">
+                            <div class="progress-bar bg-success-gradient @branchClass"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-9 col-md-12 col-lg-8">
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 col-xl-2">
+                <div class="card card-img-holder bg-success-gradient">
+                    <div class="card-body list-icons text-white">
+                        <div class="clearfix">
+                            <div class="float-right mt-2">
+                                <span class="text-primary">
+                                    <i class="fa fa-users text-white"></i>
+                                </span>
+                            </div>
+                            <div class="float-left">
+                                <p class="card-text text-muted mb-1"><a href="" title="View All" class="text-white">Live Users</a></p>
+                                <h3 id="liveUsers">0 Users</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-xl-2">
+                <div class="card card-img-holder">
+                    <div class="card-body list-icons">
+                        <div class="clearfix">
+                            <div class="float-right  mt-2">
+                                <span class="text-primary">
+                                    <i class="fa fa-star-half-o tx-success"></i>
+                                </span>
+                            </div>
+                            <div class="float-left">
+                                <p class="card-text text-muted mb-1"><a href="/Subscriptions/ListingDashboard/Reviews/@ViewBag.ListingID" target="_blank" title="View All">Reviews</a></p>
+                                @{ int reviews = ViewBag.Reviews; }
+                                <h3>@reviews.ToMetric()</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-xl-2">
+                <div class="card card-img-holder">
+                    <div class="card-body list-icons">
+                        <div class="clearfix">
+                            <div class="float-right  mt-2">
+                                <span class="text-primary ">
+                                    <i class="fa fa-eye tx-danger"></i>
+                                </span>
+                            </div>
+                            <div class="float-left">
+                                <p class="card-text text-muted mb-1"><a href="/Subscriptions/ListingDashboard/Views/@ViewBag.ListingID" target="_blank" title="View All">Views</a></p>
+                                @{ int ViewCount = ViewBag.ListingViewCount; }
+                                <h3>@ViewCount.ToMetric()</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-xl-2">
+                <div class="card card-img-holder">
+                    <div class="card-body list-icons">
+                        <div class="clearfix">
+                            <div class="float-right  mt-2">
+                                <span class="text-primary ">
+                                    <i class="fa fa-thumbs-o-up tx-30"></i>
+                                </span>
+                            </div>
+                            <div class="float-left">
+                                <p class="card-text text-muted mb-1"><a href="/Subscriptions/ListingDashboard/Likes/@ViewBag.ListingID" target="_blank" title="View All">Likes</a></p>
+                                @{ int likes = ViewBag.Likes; }
+                                <h3>@likes.ToMetric()</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-xl-2">
+                <div class="card card-img-holder">
+                    <div class="card-body list-icons">
+                        <div class="clearfix">
+                            <div class="float-right  mt-2">
+                                <span class="text-primary ">
+                                    <i class="fa fa-bookmark-o tx-danger"></i>
+                                </span>
+                            </div>
+                            <div class="float-left">
+                                <p class="card-text text-muted mb-1"><a href="/Subscriptions/ListingDashboard/Bookmarks/@ViewBag.ListingID" target="_blank" title="View All">Bookmarks</a></p>
+                                @{ int bookmarks = ViewBag.Bookmarks; }
+                                <h3>@bookmarks.ToMetric()</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-xl-2">
+                <div class="card card-img-holder">
+                    <div class="card-body list-icons">
+                        <div class="clearfix">
+                            <div class="float-right  mt-2">
+                                <span class="text-primary">
+                                    <i class="fa fa-bell-o text-orange"></i>
+                                </span>
+                            </div>
+                            <div class="float-left">
+                                <p class="card-text text-muted mb-1"><a href="/Subscriptions/ListingDashboard/Subscribes/@ViewBag.ListingID" target="_blank" title="View All">Subscribes</a></p>
+                                @{ int subscribe = ViewBag.Subscribes; }
+                                <h3>@subscribe.ToMetric()</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-lg-12 col-xl-12">
+                <div class="card card-table-two">
+                    <div id="curve_chart" style="width: 100%; height: 500px"></div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-12 col-xl-12">
+                <div class="card card-table-two">
+                    <div id="map" style="width: 100%; height: 500px"></div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-lg-4 col-xl-4">
+                <div class="card card-table-two">
+                    <div class="card-header pb-0">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title mg-b-0">Listings View By Country</h4>
+                            <i class="mdi mdi-dots-horizontal text-gray"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table text-md-nowrap" id="example1">
+                                <thead>
+                                    <tr>
+                                        <th class="wd-15p border-bottom-0">Country</th>
+                                        <th class="wd-15p border-bottom-0">Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in listingViewByCountry)
+                                    {
+                                        <tr>
+                                            <td>@item.Country</td>
+                                            <td>@item.Count</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-lg-3 col-xl-3">
+                <div class="card card-table-two">
+                    <div id="columnchart_material" style="height: 350px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- Shafi: SignalR -->
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/Hubs-Signalr/ClientDashboard/UsersOnlineOnListing.js"></script>
+    <script src="~/js/notify.js"></script>
+    <!-- End: -->
+    <!--Internal Echart Plugin -->
+    <script src="~/backend/assets/plugins/echart/echart.js"></script>
+    <script src="~/backend/assets/js/echarts.js"></script>
+
+    <!--Internal Echart Plugin -->
+    <script src="~/backend/assets/plugins/echart/echart.js"></script>
+    <script src="~/backend/assets/js/echarts.js"></script>
+
+    <!-- Shafi: Create map using help from this url http://bl.ocks.org/d3noob/9150014 -->
+    <link rel="stylesheet" href="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7/leaflet.css" />
+    <script src="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7/leaflet.js"></script>
+    <script>
+          var map = L.map('map').setView([18.975, 72.8258], 1);
+        mapLink =
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 18,
+        }).addTo(map);
+
+        var planes = [];
+        @foreach (var item in getListingViews)
+        {
+            var profile = await userProfileService.GetProfileByOwnerGuid(item.OwnerGuid);
+
+            if(profile != null)
+            {
+                var country = await addressRepo.CountryDetailsAsync(profile.CountryID);
+                var state = await addressRepo.StateDetailsAsync(profile.StateID);
+                var city = await addressRepo.CityDetailsAsync(profile.CityID);
+                var assembly = await addressRepo.StationDetailsAsync(profile.AssemblyID);
+                var pincode = await addressRepo.PincodeDetailsAsync(profile.PincodeID);
+
+                @:planes.push(["<strong>User:</strong> Registered<br /><strong>Name:</strong> @profile.Name<br />  <strong>Country:</strong> @country.Name <br /><strong>State:</strong> @state.Name <br /><strong>City:</strong> @city.Name  <br /><strong>Assembly:</strong> @assembly.Name<br /><strong>Pincode:</strong> @pincode.PincodeNumber", @item.Latitude, @item.Longitude])
+            }
+                else
+                {
+                @:planes.push(["<strong>User:</strong> Anonymous<br /><strong>Country</strong>: @item.Country <br /><strong>State</strong>: @item.State <br /><strong>City</strong>: @item.City <br /><strong>Pincode</strong>: @item.Pincode", @item.Latitude, @item.Longitude])
+            }
+        }
+
+        for (var i = 0; i < planes.length; i++) {
+            marker = new L.marker([planes[i][1], planes[i][2]])
+                .bindPopup(planes[i][0])
+                .addTo(map);
+        }
+    </script>
+    <!-- End: -->
+    <!-- Shafi: Create Line Chart -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Day', 'Views', 'Likes', 'Subscribes', 'Bookmarks', 'Reviews'],
+                ['@graphViews.Thirty', @graphViews.ThirtyCount, @graphViews.ThirtyCount, @graphSubscribes.ThirtyCount, @graphBookmarks.ThirtyCount, @graphReviews.ThirtyCount],
+                ['@graphViews.TwentyNine', @graphViews.TwentyNineCount, @graphLikes.TwentyNineCount, @graphSubscribes.TwentyNineCount, @graphBookmarks.TwentyNineCount, @graphReviews.TwentyNineCount],
+                ['@graphViews.TwentyEight', @graphViews.TwentyEightCount, @graphLikes.TwentyEightCount, @graphSubscribes.TwentyEightCount, @graphBookmarks.TwentyEightCount, @graphReviews.TwentyEightCount],
+                ['@graphViews.TwentySeven', @graphViews.TwentySevenCount, @graphLikes.TwentySevenCount, @graphSubscribes.TwentySevenCount, @graphBookmarks.TwentySevenCount, @graphReviews.TwentySevenCount],
+                ['@graphViews.TwentySix', @graphViews.TwentySixCount, @graphLikes.TwentySixCount, @graphSubscribes.TwentySixCount, @graphBookmarks.TwentySixCount, @graphReviews.TwentySixCount],
+                ['@graphViews.TwentyFive', @graphViews.TwentyFiveCount, @graphLikes.TwentyFiveCount, @graphSubscribes.TwentyFiveCount, @graphBookmarks.TwentyFiveCount, @graphReviews.TwentyFiveCount],
+                ['@graphViews.TwentyFour', @graphViews.TwentyFourCount, @graphLikes.TwentyFourCount, @graphSubscribes.TwentyFourCount, @graphBookmarks.TwentyFourCount, @graphReviews.TwentyFourCount],
+                ['@graphViews.TwentyThree', @graphViews.TwentyThreeCount, @graphLikes.TwentyThreeCount, @graphSubscribes.TwentyThreeCount, @graphBookmarks.TwentyThreeCount, @graphReviews.TwentyThreeCount],
+                ['@graphViews.TwentyTwo', @graphViews.TwentyTwoCount, @graphLikes.TwentyTwoCount, @graphSubscribes.TwentyTwoCount, @graphBookmarks.TwentyTwoCount, @graphReviews.TwentyTwoCount],
+                ['@graphViews.TwentyOne', @graphViews.TwentyOneCount, @graphLikes.TwentyOneCount, @graphSubscribes.TwentyOneCount, @graphBookmarks.TwentyOneCount, @graphReviews.TwentyOneCount],
+                ['@graphViews.Twenty', @graphViews.TwentyCount, @graphLikes.TwentyCount, @graphSubscribes.TwentyCount, @graphBookmarks.TwentyCount, @graphReviews.TwentyCount],
+                ['@graphViews.Nineteen', @graphViews.NineteenCount, @graphLikes.NineteenCount, @graphSubscribes.NineteenCount, @graphBookmarks.NineteenCount, @graphReviews.NineteenCount],
+                ['@graphViews.Eighteen', @graphViews.EighteenCount, @graphLikes.EighteenCount, @graphSubscribes.EighteenCount, @graphBookmarks.EighteenCount, @graphReviews.EighteenCount],
+                ['@graphViews.Seventeen', @graphViews.SeventeenCount, @graphLikes.SeventeenCount, @graphSubscribes.SeventeenCount, @graphBookmarks.SeventeenCount, @graphReviews.SeventeenCount],
+                ['@graphViews.Sixteen', @graphViews.SixteenCount, @graphLikes.SixteenCount, @graphSubscribes.SixteenCount, @graphBookmarks.SixteenCount, @graphReviews.SixteenCount],
+                ['@graphViews.Fifteen', @graphViews.FifteenCount, @graphLikes.FifteenCount, @graphSubscribes.FifteenCount, @graphBookmarks.FifteenCount, @graphReviews.FifteenCount],
+                ['@graphViews.Fourteen', @graphViews.FourteenCount, @graphLikes.FourteenCount, @graphSubscribes.FourteenCount, @graphBookmarks.FourteenCount, @graphReviews.FourteenCount],
+                ['@graphViews.Thirteen', @graphViews.ThirteenCount, @graphLikes.ThirteenCount, @graphSubscribes.ThirteenCount, @graphBookmarks.ThirteenCount, @graphReviews.ThirteenCount],
+                ['@graphViews.Twelve', @graphViews.TwelveCount, @graphLikes.TwelveCount, @graphSubscribes.TwelveCount, @graphBookmarks.TwelveCount, @graphReviews.TwelveCount],
+                ['@graphViews.Eleven', @graphViews.ElevenCount, @graphLikes.ElevenCount, @graphSubscribes.ElevenCount, @graphBookmarks.ElevenCount, @graphReviews.ElevenCount],
+                ['@graphViews.Ten', @graphViews.TenCount, @graphLikes.TenCount, @graphSubscribes.TenCount, @graphBookmarks.TenCount, @graphReviews.TenCount],
+                ['@graphViews.Nine', @graphViews.NineCount, @graphLikes.NineCount, @graphSubscribes.NineCount, @graphBookmarks.NineCount, @graphReviews.NineCount],
+                ['@graphViews.Eight', @graphViews.EightCount, @graphLikes.EightCount, @graphSubscribes.EightCount, @graphBookmarks.EightCount, @graphReviews.EightCount],
+                ['@graphViews.Seven', @graphViews.SevenCount, @graphLikes.SevenCount, @graphSubscribes.SevenCount, @graphBookmarks.SevenCount, @graphReviews.SevenCount],
+                ['@graphViews.Six', @graphViews.SixCount, @graphLikes.SixCount, @graphSubscribes.SixCount, @graphBookmarks.SixCount, @graphReviews.SixCount],
+                ['@graphViews.Five', @graphViews.FiveCount, @graphLikes.FiveCount, @graphSubscribes.FiveCount, @graphBookmarks.FiveCount, @graphReviews.FiveCount],
+                ['@graphViews.Four', @graphViews.FourCount, @graphLikes.FourCount, @graphSubscribes.FourCount, @graphBookmarks.FourCount, @graphReviews.FourCount],
+                ['@graphViews.Three', @graphViews.ThreeCount, @graphLikes.ThreeCount, @graphSubscribes.ThreeCount, @graphBookmarks.ThreeCount, @graphReviews.ThreeCount],
+                ['@graphViews.Two', @graphViews.TwoCount, @graphLikes.TwoCount, @graphSubscribes.TwoCount, @graphBookmarks.TwoCount, @graphReviews.TwoCount],
+                ['@graphViews.One', @graphViews.OneCount, @graphLikes.OneCount, @graphSubscribes.OneCount, @graphBookmarks.OneCount, @graphReviews.OneCount]
+            ]);
+
+            var options = {
+                title: 'Listing Performance Last 30 Days',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                width: '100%',
+                height: '500',
+                chartArea: {
+                    left: 50, top: 50, width: '100%', height: '350' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['bar'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Month', 'Views'],
+                ['@listingViewByCurrentMonth.MonthName', @listingViewByCurrentMonth.Count],
+                ['@listingViewByLastMonth.MonthName', @listingViewByLastMonth.Count]
+            ]);
+
+            var options = {
+                legend: { position: 'none' },
+                chart: {
+                    title: 'Listing Views',
+                    subtitle: 'Last 2 Months Performance',
+                }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+    </script>
+    <!-- End: -->
+}
+
+

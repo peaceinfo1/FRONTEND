@@ -1,0 +1,175 @@
+﻿@model BOL.PLAN.Subscription
+@inject IListingManager listingManager
+
+@{
+    ViewData["Title"] = "Add Subscription";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+@{
+    var plans = await listingManager.GetPlansAsync();
+}
+
+
+<h4>Subscription</h4>
+<hr />
+
+<div class="row">
+    @foreach (var item in plans.Where(p => p.Name != "Free").OrderBy(p => p.Priority))
+    {
+        <div class="col-xs-6 col-sm-6 col-lg-6 col-xl-3">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ListingID" value="@ViewBag.ListingID" />
+                <input type="hidden" asp-for="OwnerGuid" value="none" />
+                <input type="hidden" asp-for="IPAddress" value="none" />
+                <input type="hidden" asp-for="StartDate" value="@DateTime.Now" />
+                <input type="hidden" asp-for="StartTime" value="@DateTime.Now" />
+                <span asp-validation-for="ListingID" class="text-danger"></span>
+                <span asp-validation-for="OwnerGuid" class="text-danger"></span>
+                <span asp-validation-for="IPAddress" class="text-danger"></span>
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+                <div class="panel price panel-color" style="border:1px solid #ededed;">
+                    <div class="panel-heading bg-@item.CSSClassName p-0 text-center">
+                        <h3>@item.Name</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        @{ 
+                            var yearlyPrice = item.MonthlyPrice * 12;
+                        }
+                        <p class="lead"><span style="font-size:26px; font-weight:400;">Rs.</span><strong style="font-size:40px;" class="text-@item.CSSClassName">@yearlyPrice</strong> <span style="font-size:20px; font-weight:400;">/  yearly</span></p>
+                    </div>
+                    <ul class="list-group list-group-flush text-center" style="font-weight:normal;">
+                        <li class="list-group-item"><strong> @item.Categories</strong> Categories</li>
+                        <li class="list-group-item"><strong>@item.Offers </strong> Offers</li>
+                        <li class="list-group-item"><strong> @item.Products </strong> Products</li>
+                        <li class="list-group-item"><strong> @item.JobPostings </strong> Job Posting</li>
+                        <li class="list-group-item border-bottom-0"><strong> @item.RecentProjects</strong> Recent Projects</li>
+                        <li class="list-group-item border-bottom-0"><strong> @item.City</strong> Cities</li>
+                        @if (item.SmsNotifications == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                SMS Notification
+                            </li>
+                        }
+                        @if (item.EmailNotifications == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Email Notifications
+                            </li>
+                        }
+                        @if (item.UserHistory == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                User History
+                            </li>
+                        }
+                        @if (item.Analytics == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Analytics
+                            </li>
+                        }
+                        @if (item.MembershipBadge == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Membership Badge
+                            </li>
+                        }
+                        @if (item.PhotoGallery == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Photo Gallery
+                            </li>
+                        }
+                        @if (item.MultipleLocations == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Multiple Locations
+                            </li>
+                        }
+                        @if (item.OneHourService == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                One Hour Service
+                            </li>
+                        }
+                        @if (item.Team == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Team
+                            </li>
+                        }
+                        @if (item.MonopolyProducts == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Monopoly Products
+                            </li>
+                        }
+                        @if (item.Branches == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Branches
+                            </li>
+                        }
+                        @if (item.ClientLogo == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Client Logo
+                            </li>
+                        }
+                        @if (item.PartnerProfile == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Partner Profile
+                            </li>
+                        }
+                        @if (item.MessagesInbox == true)
+                        {
+                            <li class="list-group-item border-bottom-0">
+                                Messages Inbox
+                            </li>
+                        }
+                        <li class="list-group-item border-bottom-0">
+                            <input type="hidden" asp-for="PaymentStatus" value="Pending" />
+                            <input type="hidden" asp-for="PlanID" value="@item.PlanID" />
+                            <select asp-for="PeriodID" class="form-control @item.PlanID" asp-items="ViewBag.PeriodID">
+                            </select>
+                        </li>
+                        <li class="list-group-item border-bottom-0">
+                            @{
+                                var price = item.MonthlyPrice * 12;
+                            }
+                            <h3 class="@item.Name">Rs.@price</h3>
+                        </li>
+                        <li class="list-group-item border-bottom-0">
+                            <select asp-for="PaymentMethod" class="form-control select2">
+                                <option value="Cash On Delivery">Cash On Delivery</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="PayTM">PayTM</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                            </select>
+                            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                        </li>
+                        <li class="list-group-item border-bottom-0">
+                            <input type="submit" class="btn btn-block btn-@item.CSSClassName" value="Order Now" />
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <!-- Begin: Update price on period change -->
+        string className = "." + item.PlanID;
+        string ratesClassName = "." + item.Name;
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                $("@className").change(function () {
+                    $("@ratesClassName").html("Rs." + this.value * @item.MonthlyPrice + "/-");
+                    })
+                });
+        </script>
+        <!-- End: -->
+    }
+</div>

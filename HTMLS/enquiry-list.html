@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="directory and listings ">
+    <meta name="author" content="directory">
+    <title>Home Page</title>
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="FrontEnd/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="FrontEnd/img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72"
+        href="FrontEnd/img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114"
+        href="FrontEnd/img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144"
+        href="FrontEnd/img/apple-touch-icon-144x144-precomposed.png">
+    <!---Reset style-->
+    <link href="FrontEnd/css/reset.css" rel="stylesheet">
+    <!-- BASE CSS -->
+    <link href="FrontEnd/css/bootstrap.min.css" rel="stylesheet">
+    <link href="FrontEnd/css/style.css" rel="stylesheet">
+    <link href="FrontEnd/css/vendors.css" rel="stylesheet">
+    <!-- YOUR CUSTOM CSS -->
+    <link href="FrontEnd/css/custom.css" rel="stylesheet">
+    <link href="FrontEnd/admin_section/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="option2">
+    <!--  page Start -->
+    <div id="page">
+
+        <!-- Menu Start -->
+        <header class="header_in">
+            <div class="container">
+               <div class="row">
+                  <div class="col-lg-3 col-12">
+                     <div id="logo">
+                        <a href="index.html" title="index">
+                           <img src="FrontEnd/img/logo_sticky.svg" width="220" alt="logo" class="logo_sticky">
+                        </a>
+                     </div>
+                  </div>
+                  <div class="col-lg-9 col-12">
+                     <ul id="top_menu">
+                        <li><a href="login.html" id="hide_in_mobile" class="btn_add listing-btn">Free Listing</a></li>
+                        <!-- <li>
+                           <a href="#" class="notification" title="notification">
+                              <img src="FrontEnd/img/icon/notification.svg" alt="notification">
+                           </a>
+                        </li> -->
+                        <li>
+                           <div class="dropdown notification">
+                              <a class=" dropdown-toggle notification" type="button" id="notification" data-toggle="dropdown"
+                                 aria-haspopup="true" aria-expanded="false">
+                                 <img src="FrontEnd/img/icon/notification.svg" alt="notification">
+                              </a>
+                              <div class="dropdown-menu notification-menu" aria-labelledby="notification">
+                                 <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h6 class="m-0">Notifications</h6>
+                                    <a href="notifications.html" style="font-size: 12px; color: #fe900d;">View All</a>
+                                 </div>
+                                 <div class="notify_body">
+                                    <div class="notification-list">
+                                       <span class="small float-right text-muted">11:21 AM June 04 2021</span>
+                                       <span class="nitify_dot"></span>
+                                       <div class="notify_heading">
+                                          Listing
+                                       </div>
+                                       <p class="notify_txt">
+                                          This is an automated server response message. All systems are online.
+                                       </p>
+                                    </div>
+                                    <div class="notification-list">
+                                       <span class="small float-right text-muted">11:21 AM June 04 2021</span>
+                                       <span class="nitify_dot"></span>
+                                       <div class="notify_heading">
+                                          Listing
+                                       </div>
+                                       <p class="notify_txt">
+                                          This is an automated server response message. All systems are online.
+                                       </p>
+                                    </div>
+                                    <div class="notification-list">
+                                       <span class="small float-right text-muted">11:21 AM June 04 2021</span>
+                                       <span class="nitify_dot"></span>
+                                       <div class="notify_heading">
+                                          Listing
+                                       </div>
+                                       <p class="notify_txt">
+                                          This is an automated server response message. All systems are online.
+                                       </p>
+                                    </div>
+                                    <div class="notification-list">
+                                       <span class="small float-right text-muted">11:21 AM June 04 2021</span>
+                                       <span class="nitify_dot"></span>
+                                       <div class="notify_heading">
+                                          Listing
+                                       </div>
+                                       <p class="notify_txt">
+                                          This is an automated server response message. All systems are online.
+                                       </p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <li>
+                           <div class="dropdown usericon">
+                              <a class="usericon-btn dropdown-toggle" type="button" id="usericon" data-toggle="dropdown"
+                                 aria-haspopup="true" aria-expanded="false">
+                                 <img src="FrontEnd/img/icon/user.svg">
+                              </a>
+                              <div class="dropdown-menu" aria-labelledby="usericon">
+                                 <a class="dropdown-item" href="user-profile.html"><i class="fa fa-user" style="margin-right: 15px;"></i>My Profile</a>
+                                 <!-- <a class="dropdown-item" href="user-profile.html#v-pill-notification-tab"><i class="fa fa-bell "></i>Notification</a> -->
+                                 <a class="dropdown-item" href="index.html"><i class="fa fa-sign-out "></i>Logout</a>
+                              </div>
+                           </div>
+                        </li>
+                     </ul>
+                     <!-- /top_menu -->
+                     <a href="#menu" class="btn_mobile">
+                        <div class="hamburger hamburger--spin" id="hamburger">
+                           <div class="hamburger-box">
+                              <div class="hamburger-inner"></div>
+                           </div>
+                        </div>
+                     </a>
+                     <nav id="menu" class="main-menu">
+                        <ul>
+                           <!-- <li><span><a href="index.html">Home</a></span></li>
+                           <li><span><a href="#0">Buy</a></span></li>
+                           <li><span><a href="#0">Sell</a></span></li>
+                           <li><span><a href="#0">Offer</a></span></li>
+                           <li><span><a href="#0">Job</a></span></li>
+                           <li><span><a href="labour-naka.html">Labour Naka</a></span></li> -->
+                           <li><span><a href="#">Suggestion</a></span></li>
+                        </ul>
+                     </nav>
+                  </div>
+               </div>
+               <!-- /row -->
+            </div>
+            <!-- /container -->
+            <!-- search_mobile -->
+            <div class="layer"></div>
+         </header>
+        <!-- Menu End -->
+
+        <!-- Search bar Start -->
+        <!-- <div id="results">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-8 col-12">
+                        <div class="wrap">
+                            <div class="search">
+                                <input type="text" class="searchTerm" placeholder="Search" autocomplete="off">
+                                <button type="submit" class="searchButton">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- Search bar End -->
+
+        <main>
+            <div class="container mt-4" style="height: 100vh;">
+                <!--Category Banner Start-->
+                <!-- <div class="banner-block one-block">
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="#" class="grid_item" style="height: 250px;">
+                                <img src="FrontEnd/img/listing-img.jpeg" alt="" style="width: 100%; height: 100%;">
+                            </a>
+                        </div>
+                    </div>
+                </div> -->
+                <!--Category Banner Start-->
+
+                <!--Listing Category Start-->
+                <div class="listing-list">
+                    <div class="row">
+
+                        <div class="col-lg-12 mb-space-remove">
+                            <a href="#">
+                                <div class="strip map_view px-4 py-3">
+                                    <div class="enquiry_date">
+                                        02-08-2023
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Full Name <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">John Smith</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Mobile Number <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">+91 9876543210</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Email Id <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">smith@gmail.com</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Enquiry Title <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">Interior Base Enquiry</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Message<span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore placeat, vel
+                                                quaerat praesentium totam, 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="strip map_view px-4 py-3">
+                                    <div class="enquiry_date">
+                                        02-08-2023
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Full Name <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">John Smith</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Mobile Number <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">+91 9876543210</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Email Id <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">smith@gmail.com</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Enquiry Title <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">Interior Base Enquiry</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Message<span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore placeat, vel
+                                                quaerat praesentium totam, 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="strip map_view px-4 py-3">
+                                    <div class="enquiry_date">
+                                        02-08-2023
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Full Name <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">John Smith</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Mobile Number <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">+91 9876543210</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Email Id <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">smith@gmail.com</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Enquiry Title <span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">Interior Base Enquiry</div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-2 col-4">
+                                            <div class="enquiry_list_heading">Message<span>:</span></div>
+                                        </div>
+                                        <div class="col-md-10 col-8">
+                                            <div class="enquiry_list_txt">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore placeat, vel
+                                                quaerat praesentium totam, 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--Listing Category End-->
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+               <div class="row">
+                  <div class="col-lg-2 col-md-4 col-6">
+                     <div class="footer-link">
+                        <ul class="links">
+                           <li><a href="index.html">Home</a></li>
+                           <li><a href="about-us.html">About Us</a></li>
+                           <li><a href="contact-us.html">Contact Us</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-lg-2 col-md-4 col-6">
+                     <div class="footer-link">
+                        <ul class="links">
+                           <li><a href="#">Buy</a></li>
+                           <li><a href="#">Buy</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-lg-2 col-md-4 col-6">
+                     <div class="footer-link">
+                        <ul class="links">
+                           <li><a href="#">Sell</a></li>
+                           <li><a href="#">Sell</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-lg-2 col-md-4 col-6">
+                     <div class="footer-link">
+                        <ul class="links">
+                           <li><a href="#">Offer</a></li>
+                           <li><a href="#">Offer</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-lg-2 col-md-4 col-6">
+                     <div class="footer-link">
+                        <ul class="links">
+                           <li><a href="#">Job</a></li>
+                           <li><a href="#">Job</a></li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div class="col-lg-2 col-md-4 col-6">
+                     <div class="footer-link">
+                        <ul class="links">
+                           <li><a href="#">Labour Naka</a></li>
+                           <li><a href="#">Labour Naka</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <!-- /row-->
+               <hr style="margin: 0;">
+               <div class="row">
+                  <div class="col-lg-8 col-12 block-center-footer">
+                     <ul id="additional_links">
+                        <li><a href="termsandconditions.html">Terms and conditions</a></li>
+                        <li><a href="privacy-policy.html">Privacy</a></li>
+                        <li><a target="_blank" href="http://peaceinfotech.com/">© PeaceInfotech Services Pvt. Ltd</a></li>
+                     </ul>
+                  </div>
+                  <div class="col-lg-4 col-12 block-center-footer">
+                     <div class="follow_us">
+                        <ul>
+                           <li><a href="#0"><i class="ti-facebook"></i></a></li>
+                           <li><a href="#0"><i class="ti-twitter-alt"></i></a></li>
+                           <li><a href="#0"><i class="ti-google"></i></a></li>
+                           <li><a href="#0"><i class="ti-pinterest"></i></a></li>
+                           <li><a href="#0"><i class="ti-instagram"></i></a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </footer>
+        <!--/footer-->
+    </div>
+    <!-- Page End -->
+
+    <!-- Sign In Popup -->
+    <div id="sign-in-dialog" class="dialog-mfp zoom-anim-dialog mfp-hide">
+        <div class="small-dialog-header">
+            <h3>Sign In</h3>
+        </div>
+        <div class="step first">
+            <div class="d-flex justify-content-center pb-3">
+                <img src="FrontEnd/img/logo_sticky.svg" width="220" alt="logo" class="logo_sticky">
+            </div>
+            <ul class="nav nav-tabs" id="tab_checkout" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#tab_1" role="tab"
+                        aria-controls="tab_1" aria-selected="true">Sign Up
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#tab_2" role="tab"
+                        aria-controls="tab_2" aria-selected="false">Login In</a>
+                </li>
+            </ul>
+            <div class="tab-content checkout">
+                <div class="tab-pane fade show active" id="tab_1" role="tabpanel" aria-labelledby="tab_1">
+                    <from action="#" post="submit">
+                        <div class="form-group">
+                            <input class="form-control" type="email" name="email" placeholder="Email">
+                            <i class="icon_mail_alt"></i>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="number" name="number" placeholder="Mobile no.">
+                            <i class="icon_phone"></i>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" id="password"
+                                placeholder="Password">
+                            <i class="icon_lock_alt"></i>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" id="password"
+                                placeholder="Confirm Password">
+                            <i class="icon_lock_alt"></i>
+                        </div>
+                        <div class="clearfix add_bottom_15">
+                            <div class="checkboxes float-left">
+                                <label class="container_check">Accept terms and conditions
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn_1 full-width" value="Sign Up">
+                    </from>
+                </div>
+                <!-- /tab_1 -->
+                <div class="tab-pane fade" id="tab_2" role="tabpanel" aria-labelledby="tab_2">
+                    <div class="form-group">
+                        <input class="form-control" type="email" name="email" placeholder="Email">
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" id="password"
+                            placeholder="Password">
+                        <i class="icon_lock_alt"></i>
+                    </div>
+                    <div class="clearfix add_bottom_15">
+                        <div class="checkboxes float-left">
+                            <label class="container_check">Remember me
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="float-right"><a id="forgot" href="#0">Lost Password?</a></div>
+                    </div>
+                    <div id="forgot_pw">
+                        <div class="form-group">
+                            <input class="form-control" type="email" name="email" placeholder="Email">
+                            <i class="icon_mail_alt"></i>
+                        </div>
+                        <p>A new password will be sent shortly.</p>
+                        <div class="text-center"><input type="submit" value="Reset Password" class="btn_1 full-width">
+                        </div>
+                    </div>
+                    <input type="submit" class="btn_1 full-width" value="Login In">
+                </div>
+                <!-- /tab_2 -->
+            </div>
+        </div>
+    </div>
+    <!-- /Sign In Popup -->
+
+    <!--Bottom Menu-->
+    <div class="container-fluid bottom-link-sticky">
+        <div class="row">
+            <div class="col-3 bottom-link-sticky-list">
+                <a href="#" title="suggestion">suggestion</a>
+            </div>
+            <div class="col-3 bottom-link-sticky-list">
+                <a href="#" title="Post Add">Post Add</a>
+            </div>
+            <div class="col-3 bottom-link-sticky-list">
+                <a href="#" title="Send Enquiry">Send Enquiry</a>
+            </div>
+            <div class="col-3 bottom-link-sticky-list">
+                <a href="#" title="Share">Share</a>
+            </div>
+        </div>
+    </div>
+    <!--Bottom Menu-->
+
+     <!-- Floating Button -->
+   <div class="mobile_listing_btn">
+    <a href="login.html" id="" title="Sign In" class="btn_add listing-btn">Create Free
+       Listing</a>
+ </div>
+ <!-- Floating Button -->
+
+    <div id="toTop"></div>
+    <!-- Back to top button -->
+
+    <!-- COMMON SCRIPTS Start -->
+    <script src="FrontEnd/js/common_scripts.js"></script>
+    <script src="FrontEnd/js/functions.js"></script>
+    <script src="FrontEnd/js/validate.js"></script>
+    <script src="FrontEnd/js/main.js"></script>
+    <!-- COMMON SCRIPTS End -->
+</body>
+
+</html>

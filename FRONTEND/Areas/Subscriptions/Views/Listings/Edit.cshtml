@@ -1,0 +1,160 @@
+﻿@model BOL.LISTING.Listing
+
+@{
+    ViewData["Title"] = "Edit Company";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<!-- Begin: Create history -->
+@await Component.InvokeAsync("UserHistory", "Visited create listing page.")
+<!-- End: -->
+<!-- Begin: Breadcrumb -->
+@{
+    ViewData["BC-1"] = "Subscriptions";
+    ViewData["BC-2"] = "Company";
+    ViewData["BC-3"] = ViewData["Title"];
+    ViewData["BT-Text"] = "View All Listings";
+    ViewData["BT-Link"] = "/Subscriptions/Listings/Index";
+}
+<!-- End: -->
+<!-- Begin: Change status of active edit listing menu based on selection -->
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $Active = $('[name = "@ViewData["BC-2"]"]');
+            $Active.addClass("active");
+            $Active.find('span').removeClass("badge badge-secondary badge-pill").addClass("badge badge-light badge-pill");
+        });
+    </script>
+
+    <script type="text/javascript">
+        // Shafi: Bind keyword field with url field and convert to upper case by remove space
+        $(document).ready(function () {
+            // Bind keyword, url and description input together
+            $("#company-name").keyup(function (event) {
+
+                // Force text to be typed in lowercase in Keyword text field
+                $(this).val($(this).val().toLowerCase());
+
+                // Get value of keyword text field
+                var companyName = $(this).val();
+
+                // Tranform value of keyword to Title Case
+                function ToTitleCase(companyName) {
+                    return companyName.replace(/(?:^|\s)\w/g, function (match) {
+                        return match.toUpperCase();
+                    });
+                }
+
+                // Call ToTitleCase function replace space by - hyphen through and convert to title case
+                var listingurl = ToTitleCase(companyName).replace(/\s+/g, "-");
+
+                // Set final value of input with id's url, title and description
+                $("#listing-url").val(listingurl);
+                $("#company-name").val(ToTitleCase(companyName));
+            });
+            // End:
+
+            // Prevent user manually typing text in url input
+            $("#listing-url").keypress(function (e) {
+                e.preventDefault();
+            });
+            // End:
+        });
+    </script>
+}
+}
+<!-- End: -->
+
+<div class="col-lg-12">
+    <div class="row">
+        @await Component.InvokeAsync("EditListingSideMenu")
+
+        <div class="col-lg-10">
+            <h4>@ViewData["Title"]</h4>
+            <hr />
+            <form asp-action="Edit" class="parsley-style-1" id="selectForm2" name="selectForm2">
+                <div class="row">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ListingID" />
+                    <!-- Begin: Hidden -->
+                    <input type="hidden" asp-for="CreatedDate" value="@Model.CreatedDate" />
+                    <input type="hidden" asp-for="CreatedTime" value="@Model.CreatedTime" />
+                    <input type="hidden" asp-for="OwnerGuid" value="@Model.OwnerGuid" />
+                    <input type="hidden" asp-for="IPAddress" value="@Model.IPAddress" />
+                    <span asp-validation-for="IPAddress" class="text-danger"></span>
+                    <span asp-validation-for="OwnerGuid" class="text-danger"></span>
+                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                    <span asp-validation-for="CreatedTime" class="text-danger"></span>
+                    <!-- End:-->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" data-parsley-class-handler="#fnWrapper" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Gender" class="control-label"></label>
+                            <select asp-for="Gender" class="form-control select2" data-parsley-class-handler="#fnWrapper" required>
+                                <option selected value=""></option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Undisclosed">Undisclosed</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CompanyName" class="control-label"></label>
+                            <input asp-for="CompanyName" class="form-control" data-parsley-class-handler="#fnWrapper" required />
+                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="YearOfEstablishment" class="control-label"></label>
+                            <input asp-for="YearOfEstablishment" class="form-control" data-parsley-class-handler="#fnWrapper" required />
+                            <span asp-validation-for="YearOfEstablishment" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NumberOfEmployees" class="control-label"></label>
+                            <input asp-for="NumberOfEmployees" class="form-control" data-parsley-class-handler="#fnWrapper" required />
+                            <span asp-validation-for="NumberOfEmployees" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Designation" class="control-label"></label>
+                            <select asp-for="Designation" asp-items="@ViewBag.Designations" class="form-control select2" data-parsley-class-handler="#fnWrapper" required>
+                                <option selected value=""></option>
+                            </select>
+                            <span asp-validation-for="Designation" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="NatureOfBusiness" class="control-label"></label>
+                            <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusiness" class="form-control select2" data-parsley-class-handler="#fnWrapper" required>
+                                <option selected value=""></option>
+                            </select>
+                            <span asp-validation-for="NatureOfBusiness" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Turnover" class="control-label"></label>
+                            <select asp-for="Turnover" asp-items="@ViewBag.Turnover" class="form-control select2" data-parsley-class-handler="#fnWrapper" required>
+                                <option selected value=""></option>
+                            </select>
+                            <span asp-validation-for="Turnover" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ListingURL" class="control-label"></label>
+                            <input asp-for="ListingURL" class="form-control" data-parsley-class-handler="#fnWrapper" required />
+                            <span asp-validation-for="ListingURL" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

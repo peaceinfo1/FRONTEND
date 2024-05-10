@@ -1,0 +1,84 @@
+﻿@model IEnumerable<BOL.AUDITTRAIL.UserHistory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserGuid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IPAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserAgent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReferrerURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitedURL)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserGuid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IPAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisitDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisitTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserAgent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReferrerURL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisitedURL)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.HistoryID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.HistoryID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.HistoryID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,153 @@
+﻿.mim-CompanyName {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.mim-ClaimBusiness {
+    margin-left: 15px;
+    color: #808080;
+}
+
+    .mim-ClaimBusiness a:hover {
+        color: #000000;
+    }
+
+.mim-CategoryName {
+    margin-right: 20px;
+}
+
+.mim-marginLeft-Minus20 {
+    margin-left: -20px;
+}
+
+.mim-Address {
+    line-height: 30px;
+}
+
+.mim-MarginTop-20 {
+    margin-top: 20px;
+}
+
+.mim-MarginTop-5 {
+    margin-top: 5px;
+}
+
+.mim-TopBorderSeparator {
+    border-top: 1px solid #e4e4e4;
+    padding-top: 10px;
+    margin-bottom: -28px;
+    margin-top: 20px;
+}
+
+.mim-FollowAndLike {
+    margin-top: 20px;
+}
+
+    .mim-FollowAndLike i {
+        font-size: 16px;
+        color: #000000;
+    }
+
+    .mim-FollowAndLike .pushRight {
+        margin-left: 5px;
+    }
+
+.mim-SocialShare {
+    margin-top: 20px;
+}
+
+    .mim-SocialShare i {
+        font-size: 19px;
+        color: #aeaeae;
+    }
+
+.mim-FollowAndLike .pushRight {
+    margin-left: 5px;
+}
+
+.mim-ReviewLeftBox {
+    border-right:1px solid #e4e4e4;
+}
+
+.mim-ReviewLeftBox i {
+    color:#aeaeae;
+}
+
+
+.mim-Rating {
+    font-size:26px;
+    color:#333333;
+    font-weight:bold;
+}
+
+.mim-Rating-Gray {
+    color: #bdbdbd;
+}
+
+.mim-SideBoxList h6 {
+    border: 1px solid #e4e4e4;
+    padding: 15px;
+    margin-left: -11px;
+    margin-right: -11px;
+    margin-top: -11px;
+    font-weight:bold;
+    color:#333333;
+    letter-spacing:1px;
+    font-size:15px;
+}
+
+.mim-Progress-Bar-Yellow {
+    background-color: #FFC107 !important;
+}
+
+.mim-SideBoxList ul li {
+    padding:7px;
+    font-size:14px;
+    color:#424242;
+    border-bottom:1px solid #f1f1f1;
+}
+
+.mim-SideBoxList ul {
+    height: 220px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.mim-SideBoxList ul li i {
+    color: #1a7400;
+}
+
+.mim-SideBoxList ul::-webkit-scrollbar {
+        width: 10px; /* width of the entire scrollbar */
+    }
+
+.mim-SideBoxList ul::-webkit-scrollbar-track {
+        background: #e4e4e4; /* color of the tracking area */
+    }
+
+.mim-SideBoxList ul::-webkit-scrollbar-thumb {
+        background-color: white; /* color of the scroll thumb */
+        border: 1px solid #aeaeae; /* creates padding around scroll thumb */
+    }
+
+/* Shafi: Show or hide content as per device */
+.content-desktop {
+    display: block;
+}
+
+.content-mobile {
+    display: none;
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .content-desktop {
+        display: none;
+    }
+
+    .content-mobile {
+        display: block;
+    }
+}
+/* End: */

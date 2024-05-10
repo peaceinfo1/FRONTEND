@@ -1,0 +1,29 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Responsive Bootstrap 4 Chat App" name="description" />
+    <meta name="theme-color" content="#1976d2">
+    <meta name="description" content="@ViewData["Description"]" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/theme-chat/assets/images/favicon.ico">
+    <!-- Bootstrap Css -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    @await RenderSectionAsync("CSS", required: false)
+</head>
+<body>
+    <div class="container-fluid text-center">
+        @RenderBody()
+    </div>
+    <!-- end account-pages -->
+    <!-- JAVASCRIPT -->
+    <script src="~/theme-chat/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/theme-chat/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/theme-chat/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/theme-chat/assets/libs/node-waves/waves.min.js"></script>
+    <script src="~/theme-chat/assets/js/app.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

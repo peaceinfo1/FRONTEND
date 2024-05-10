@@ -1,0 +1,75 @@
+﻿@inject IListingManager listingRepository
+
+@{
+    // Begin: Get Rating
+    var rating = await listingRepository.GetRatingAsync(ViewBag.ListingID);
+    var ratingCount = rating.Count();
+    // End:
+}
+
+<div class="col-lg-12">
+    <div class="row nomargin">
+        <span class="mim-Rating">
+            @ViewBag.RatingAverage
+            <span class="MIM-Stars" style="--rating: @ViewBag.RatingAverage;" aria-label="Rating of this product is @ViewBag.RatingAverage out of 5"></span>
+        </span>
+        <span style="margin-top:10px;">based on @ratingCount rating</span>
+        
+    </div>
+    @{
+        string Rating1Percent = ViewBag.R1 + "%";
+        string Rating2Percent = ViewBag.R2 + "%";
+        string Rating3Percent = ViewBag.R3 + "%";
+        string Rating4Percent = ViewBag.R4 + "%";
+        string Rating5Percent = ViewBag.R5 + "%";
+    }
+    <div class="row">
+        <div class="col-lg-4">5 <i class="icon-star-1"></i></div>
+        <div class="col-lg-8">
+            <div class="progress" style="height:3px; margin-left:-65px; margin-top:10px;">
+                <div class="progress-bar mim-Progress-Bar-Yellow" role="progressbar" aria-valuenow="@ViewBag.R5" aria-valuemin="0" aria-valuemax="100" style="width:@Rating5Percent;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">4 <i class="icon-star-1"></i></div>
+        <div class="col-lg-8">
+            <div class="progress" style="height:3px; margin-left:-65px; margin-top:10px;">
+                <div class="progress-bar mim-Progress-Bar-Yellow" role="progressbar" aria-valuenow="@ViewBag.R4"
+                     aria-valuemin="0" aria-valuemax="100" style="width:@Rating4Percent;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">3 <i class="icon-star-1"></i></div>
+        <div class="col-lg-8">
+            <div class="progress" style="height:3px; margin-left:-65px; margin-top:10px;">
+                <div class="progress-bar mim-Progress-Bar-Yellow" role="progressbar" aria-valuenow="@ViewBag.R3"
+                     aria-valuemin="0" aria-valuemax="100" style="width:@Rating3Percent;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">2 <i class="icon-star-1"></i></div>
+        <div class="col-lg-8">
+            <div class="progress" style="height:3px; margin-left:-65px; margin-top:10px;">
+                <div class="progress-bar mim-Progress-Bar-Yellow" role="progressbar" aria-valuenow="@ViewBag.R2"
+                     aria-valuemin="0" aria-valuemax="100" style="width:@Rating2Percent;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">1 <i class="icon-star-1"></i></div>
+        <div class="col-lg-8">
+            <div class="progress" style="height:3px; margin-left:-65px; margin-top:10px;">
+                <div class="progress-bar mim-Progress-Bar-Yellow" role="progressbar" aria-valuenow="@ViewBag.R1"
+                     aria-valuemin="0" aria-valuemax="100" style="width:@Rating1Percent;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

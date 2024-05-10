@@ -1,0 +1,84 @@
+﻿@model BOL.LISTING.Categories
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<!-- Begin: Breadcrumb -->
+@{
+    ViewData["BC-1"] = "Subscriptions";
+    ViewData["BC-2"] = "Listings";
+    ViewData["BC-3"] = ViewData["Title"];
+    ViewData["BT-Text"] = "Add New Listing";
+    ViewData["BT-Link"] = "/Subscriptions/Listings/Create";
+    ViewData["BT-Text2"] = "Manage Listings";
+    ViewData["BT-Link2"] = "/Subscriptions/Listings/Index";
+}
+<!-- End: -->
+
+<h1>Edit</h1>
+
+<h4>Categories</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CategoryID" />
+            <div class="form-group">
+                <label asp-for="ListingID" class="control-label"></label>
+                <input asp-for="ListingID" class="form-control" />
+                <span asp-validation-for="ListingID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OwnerGuid" class="control-label"></label>
+                <input asp-for="OwnerGuid" class="form-control" />
+                <span asp-validation-for="OwnerGuid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IPAddress" class="control-label"></label>
+                <input asp-for="IPAddress" class="form-control" />
+                <span asp-validation-for="IPAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstCategoryID" class="control-label"></label>
+                <input asp-for="FirstCategoryID" class="form-control" />
+                <span asp-validation-for="FirstCategoryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondCategoryID" class="control-label"></label>
+                <input asp-for="SecondCategoryID" class="form-control" />
+                <span asp-validation-for="SecondCategoryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThirdCategories" class="control-label"></label>
+                <input asp-for="ThirdCategories" class="form-control" />
+                <span asp-validation-for="ThirdCategories" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FourthCategories" class="control-label"></label>
+                <input asp-for="FourthCategories" class="form-control" />
+                <span asp-validation-for="FourthCategories" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FifthCategories" class="control-label"></label>
+                <input asp-for="FifthCategories" class="form-control" />
+                <span asp-validation-for="FifthCategories" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SixthCategories" class="control-label"></label>
+                <input asp-for="SixthCategories" class="form-control" />
+                <span asp-validation-for="SixthCategories" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

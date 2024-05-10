@@ -1,0 +1,237 @@
+﻿@model BOL.LISTING.Specialisation
+@inject DAL.LISTING.ListingDbContext listingContext
+
+@{
+    ViewData["Title"] = "Edit Specialisations";
+    Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
+}
+
+<!-- Begin: Breadcrumb -->
+@{
+    ViewData["BC-1"] = "Subscriptions";
+    ViewData["BC-2"] = "Specialisation";
+    ViewData["BC-3"] = ViewData["Title"];
+    ViewData["BT-Text"] = "View All Listings";
+    ViewData["BT-Link"] = "/Subscriptions/Listings/Index";
+    ViewData["RecordID"] = Model.SpecialisationID;
+    // Shafi: Get Listing ID for Menu
+    var listingId = listingContext.Specialisation.Where(i => i.SpecialisationID == Model.SpecialisationID).Select(i => i.ListingID).FirstOrDefault();
+    ViewData["RecordID"] = listingId;
+    // End:
+}
+<!-- End: -->
+<!-- Begin: Toggle class of menu based on active -->
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $Active = $('[name = "@ViewData["BC-2"]"]');
+            $Active.addClass("active");
+            $Active.find('span').removeClass("badge badge-secondary badge-pill").addClass("badge badge-light badge-pill");
+        });
+
+        function toggle(source) {
+            checkboxes = document.getElementsByClassName('specialisation');
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
+}
+<!-- End: -->
+
+<div class="col-lg-12">
+    <div class="row">
+        @await Component.InvokeAsync("EditListingSideMenu")
+        <div class="col-lg-10">
+            <h4>@ViewData["Title"]</h4>
+            <hr />
+            <form asp-action="Edit" class="parsley-style-1" id="selectForm2" name="selectForm2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span style="font-size:14px; font-weight:bold;"><input type="checkbox" onClick="toggle(this)" /> Select All</span>
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <!-- Begin: Hidden -->
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="SpecialisationID" />
+                                <input type="hidden" asp-for="ListingID" />
+                                <input type="hidden" asp-for="OwnerGuid" />
+                                <input type="hidden" asp-for="IPAddress" />
+                                <span asp-validation-for="ListingID" class="text-danger"></span>
+                                <span asp-validation-for="OwnerGuid" class="text-danger"></span>
+                                <span asp-validation-for="IPAddress" class="text-danger"></span>
+                                <!-- End:-->
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Banks" /> @Html.DisplayNameFor(model => model.Banks)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="AcceptTenderWork" /> @Html.DisplayNameFor(model => model.AcceptTenderWork)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="BeautyParlors" /> @Html.DisplayNameFor(model => model.BeautyParlors)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Bungalow" /> @Html.DisplayNameFor(model => model.Bungalow)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="CallCenter" /> @Html.DisplayNameFor(model => model.CallCenter)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Church" /> @Html.DisplayNameFor(model => model.Church)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Company" /> @Html.DisplayNameFor(model => model.Company)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="ComputerInstitute" /> @Html.DisplayNameFor(model => model.ComputerInstitute)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Dispensary" /> @Html.DisplayNameFor(model => model.Dispensary)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="ExhibitionStall" /> @Html.DisplayNameFor(model => model.ExhibitionStall)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Factory" /> @Html.DisplayNameFor(model => model.Factory)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Farmhouse" /> @Html.DisplayNameFor(model => model.Farmhouse)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Gurudwara" /> @Html.DisplayNameFor(model => model.Gurudwara)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Gym" /> @Html.DisplayNameFor(model => model.Gym)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="HealthClub" /> @Html.DisplayNameFor(model => model.HealthClub)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Home" /> @Html.DisplayNameFor(model => model.Home)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Hospital" /> @Html.DisplayNameFor(model => model.Hospital)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Hotel" /> @Html.DisplayNameFor(model => model.Hotel)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Laboratory" /> @Html.DisplayNameFor(model => model.Laboratory)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Mandir" /> @Html.DisplayNameFor(model => model.Mandir)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Mosque" /> @Html.DisplayNameFor(model => model.Mosque)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Office" /> @Html.DisplayNameFor(model => model.Office)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Plazas" /> @Html.DisplayNameFor(model => model.Plazas)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="ResidentialSociety" /> @Html.DisplayNameFor(model => model.ResidentialSociety)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Resorts" /> @Html.DisplayNameFor(model => model.Resorts)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Restaurants" /> @Html.DisplayNameFor(model => model.Restaurants)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Salons" /> @Html.DisplayNameFor(model => model.Salons)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Shop" /> @Html.DisplayNameFor(model => model.Shop)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="ShoppingMall" /> @Html.DisplayNameFor(model => model.ShoppingMall)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Showroom" /> @Html.DisplayNameFor(model => model.Showroom)
+                                    </label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input specialisation" asp-for="Warehouse" /> @Html.DisplayNameFor(model => model.Warehouse)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <input type="submit" value="Save & Continue" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
