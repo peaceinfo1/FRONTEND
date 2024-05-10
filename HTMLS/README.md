@@ -1,2 +1,0 @@
-# myinteriormart
-directory website

@@ -1,8 +1,0 @@
-1.	Location:	IDENTITY > Models > UserProfile
-	Skipped	:	Add user profile after user registration
-	Reason	:	Complete it after finishing country, state, city autocomplete dropdown with add new entry
-----------------------------------------------------------------------------------------------------------------
-2.	Location:	ADMIN > Areas > Common > Cities > Edit
-	Skipped	:	Edit city confirmation, create autocomplete for country, state, city, assembly etc.
-	Reason	:	1.38 lacs city data loading while editing city
-----------------------------------------------------------------------------------------------------------------
