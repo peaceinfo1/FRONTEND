@@ -147,6 +147,12 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
 
             if (User.IsInRole("Listing Manager") || User.IsInRole("Listings") || User.IsInRole("Super Administrator"))
             {
+                var distinctKeywords = listingContext.Keywords.Select(k => k.SeoKeyword).Distinct().ToList();
+
+                // Create a SelectList with distinct keywords
+                ViewData["Keywords"] = new SelectList(distinctKeywords);
+
+                //ViewData["Keywords"] = new SelectList(listingContext.Keywords, "SeoKeyword", "SeoKeyword");
                 ViewData["NatureOfBusiness"] = new SelectList(sharedManager.NatureOfBusiness, "Name", "Name");
                 ViewData["Turnover"] = new SelectList(sharedManager.Turnover, "Name", "Name");
                 ViewData["Designations"] = new SelectList(sharedManager.Designation, "Name", "Name");
@@ -156,6 +162,12 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
             {
                 if (await listingManager.CheckIfUserHas5Listings(user.Id) != true)
                 {
+                    var distinctKeywords = listingContext.Keywords.Select(k => k.SeoKeyword).Distinct().ToList();
+
+                    // Create a SelectList with distinct keywords
+                    ViewData["Keywords"] = new SelectList(distinctKeywords);
+
+                    //ViewData["Keywords"] = new SelectList(listingContext.Keywords, "SeoKeyword", "SeoKeyword");
                     ViewData["NatureOfBusiness"] = new SelectList(sharedManager.NatureOfBusiness, "Name", "Name");
                     ViewData["Turnover"] = new SelectList(sharedManager.Turnover, "Name", "Name");
                     ViewData["Designations"] = new SelectList(sharedManager.Designation, "Name", "Name");
@@ -164,6 +176,7 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
                 }
                 else
                 {
+
                     TempData["Message"] = "Free users can create only 3 listings.";
                     TempData["Description"] = "To create more listing please subscribe to paid membership plans.";
                     TempData["RefererUrl"] = Request.Headers["Referer"].ToString();
@@ -175,6 +188,10 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
 
             if (await listingManager.CheckIfUserHas5Listings(user.Id) != true)
             {
+                var distinctKeywords = listingContext.Keywords.Select(k => k.SeoKeyword).Distinct().ToList();
+
+                // Create a SelectList with distinct keywords
+                ViewData["Keywords"] = new SelectList(distinctKeywords);
                 ViewData["NatureOfBusiness"] = new SelectList(sharedManager.NatureOfBusiness, "Name", "Name");
                 ViewData["Turnover"] = new SelectList(sharedManager.Turnover, "Name", "Name");
                 ViewData["Designations"] = new SelectList(sharedManager.Designation, "Name", "Name");
@@ -183,6 +200,7 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
             }
             else
             {
+
                 TempData["Message"] = "Free users can create only 3 listings.";
                 TempData["Description"] = "To create more listing please subscribe to paid membership plans.";
                 TempData["RefererUrl"] = Request.Headers["Referer"].ToString();
@@ -196,12 +214,19 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ListingID,OwnerGuid,IPAddress,CreatedDate,CreatedTime,Name,Gender,CompanyName,YearOfEstablishment,NumberOfEmployees,Designation,NatureOfBusiness,Turnover,ListingURL, Approved")] Listing listing)
+        public async Task<IActionResult> Create([Bind("ListingID,OwnerGuid,IPAddress,CreatedDate,CreatedTime,CompanyName,YearOfEstablishment,GSTNumber,BusinessCategory,NumberOfEmployees,NatureOfBusiness,Turnover,ListingURL,Description, Approved")] Listing listing)
         {
             // Shafi: Dropdown
+
+            var distinctKeywords = listingContext.Keywords.Select(k => k.SeoKeyword).Distinct().ToList();
+
+            // Create a SelectList with distinct keywords
+            ViewData["Keywords"] = new SelectList(distinctKeywords);
+
+            //ViewData["Keywords"] = new SelectList(listingContext.Keywords, "SeoKeyword", "SeoKeyword");
             ViewData["NatureOfBusiness"] = new SelectList(sharedManager.NatureOfBusiness, "Name", "Name");
             ViewData["Turnover"] = new SelectList(sharedManager.Turnover, "Name", "Name");
-            ViewData["Designations"] = new SelectList(sharedManager.Designation, "Name", "Name");
+            //ViewData["Designations"] = new SelectList(sharedManager.Designation, "Name", "Name");
             // End:
 
             // Shafi: Get UserGuid & IP Address

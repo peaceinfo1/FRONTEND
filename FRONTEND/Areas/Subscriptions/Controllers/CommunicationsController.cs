@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Identity;
 using BAL.Audit;
 using BAL.Listings;
 using BAL.Services.Contracts;
+using DAL.SHARED;
+using BOL.SHARED;
 
 namespace FRONTEND.Areas.Subscriptions.Controllers
 {
@@ -21,14 +23,16 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
     public class CommunicationsController : Controller
     {
         private readonly ListingDbContext listingContext;
+        private readonly SharedDbContext sharedManager;
         private readonly IUserService _userService;
         private readonly IHistoryAudit audit;
         private readonly IListingManager listingManager;
 
-        public CommunicationsController(ListingDbContext listingContext, IUserService userService, IHistoryAudit audit, IListingManager listingManager)
+        public CommunicationsController(ListingDbContext listingContext, IUserService userService, IHistoryAudit audit, IListingManager listingManager, SharedDbContext sharedManager)
         {
             this.listingContext = listingContext;
             this._userService = userService;
+            this.sharedManager = sharedManager;
             this.listingManager = listingManager;
             this.audit = audit;
         }
@@ -36,8 +40,10 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
         // GET: Subscriptions/Communications/Create
         public IActionResult Create()
         {
+            ViewData["Language"] = sharedManager.Languages.Select(l => l.Name).ToList();
+            //ViewData["Language"] = new SelectList(sharedManager.Languages, "Name", "Name");
             // Shafi: Check if user created the listing recently
-            if(HttpContext.Session.GetInt32("ListingID") == null)
+            if (HttpContext.Session.GetInt32("ListingID") == null)
             {
                 return RedirectToAction("Index", "Listings", "Subscriptions");
             }
@@ -50,13 +56,20 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
             return View();
         }
 
+
+
+
+
+
         // POST: Subscriptions/Communications/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommunicationID,ListingID,OwnerGuid,IPAddress,Email,Website,Mobile,Whatsapp,Telephone,TollFree,Fax,SkypeID,TelephoneSecond")] Communication communication)
+        public async Task<IActionResult> Create([Bind("CommunicationID,ListingID,OwnerGuid,IPAddress,Language,Mobile,TollFree,Email,Telephone,TelephoneSecond,Website,SkypeID")] Communication communication, List<string> Languages)
         {
+            ViewData["Language"] = sharedManager.Languages.Select(l => l.Name).ToList();
+
             // Shafi: Get UserGuid & IP Address
             var user = await _userService.GetUserByUserName(User.Identity.Name);
             string remoteIpAddress = this.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -71,6 +84,16 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
             communication.ListingID = HttpContext.Session.GetInt32("ListingID").Value;
             // End:
 
+            // Combine the selected languages into a comma-separated string
+            if (Languages != null && Languages.Any())
+            {
+                communication.Language = string.Join(",", Languages);
+            }
+            else
+            {
+                communication.Language = string.Empty; // or handle the case where no languages are selected
+            }
+
             if (ModelState.IsValid)
             {
                 listingContext.Add(communication);
@@ -79,6 +102,54 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
             }
             return View(communication);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //public async Task<IActionResult> Create([Bind("CommunicationID,ListingID,OwnerGuid,IPAddress,Language,Mobile,TollFree,Email,Telephone,TelephoneSecond,Website,SkypeID")] Communication communication)
+        //{
+        //    //return RedirectToAction("Create", "Listings", "Subscriptions");
+
+        //    ViewData["Language"] = sharedManager.Languages.Select(l => l.Name).ToList();
+
+        //    var selectedLanguages = string.Join(",", sharedManager.Languages);
+
+
+        //    //ViewData["Language"] = new SelectList(sharedManager.Languages, "Name", "Name");
+        //    // Shafi: Get UserGuid & IP Address
+        //    var user = await _userService.GetUserByUserName(User.Identity.Name);
+        //    string remoteIpAddress = this.HttpContext.Connection.RemoteIpAddress.ToString();
+        //    string ownerGuid = user.Id;
+        //    // End:
+        //    // Shafi: Get listing id from session
+        //    ViewBag.ListingID = HttpContext.Session.GetInt32("ListingID");
+        //    // End:
+        //    // Shafi: Assign values in background
+        //    communication.OwnerGuid = ownerGuid;
+        //    communication.IPAddress = remoteIpAddress;
+        //    communication.ListingID = HttpContext.Session.GetInt32("ListingID").Value;
+        //    // End:
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        listingContext.Add(communication);
+        //        await listingContext.SaveChangesAsync();
+        //        return RedirectToAction("Create", "Addresses", "Subscriptions");
+        //    }
+        //    return View(communication);
+        //}
 
         // GET: Subscriptions/Communications/Edit/5
         public async Task<IActionResult> Edit(int? id)

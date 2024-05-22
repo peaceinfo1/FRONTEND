@@ -19,6 +19,24 @@
     ViewData["RecordID"] = listingId;
 }
 <!-- End: -->
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+</style>
+
+
 <!-- Begin: Toggle class of menu based on active -->
 @section Scripts{
     <script type="text/javascript">
@@ -35,6 +53,30 @@
 
 <!-- Begin: Fetch Second Category -->
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#firstCategoryDropdown").change(function () {
+            $("#secondCategoryDropdown").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("fetchSecondCategory", "CascadeDropdownCategories", new { area = "" })',
+                dataType: 'json',
+                data: { JsonFirstCategoryID: $("#firstCategoryDropdown").val() },
+                success: function (selSecondCategory) {
+                    $.each(selSecondCategory, function (i, secondCategory) {
+                        $("#secondCategoryDropdown").append('<option value="' + secondCategory.value + '">' + secondCategory.text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert("Cannot fetch data, error is " + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+
+
+@* <script type="text/javascript">
     $(document).ready(function () {
         $("#firstCategoryDropdown").change(function () {
             $("#secondCategoryDropdown").empty();
@@ -58,38 +100,103 @@
             return false;
         })
     });
-</script>
+</script> *@
+
 <!-- End: -->
 <!-- Begin: Fetch Third Category -->
-@*<script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         $("#secondCategoryDropdown").change(function () {
-            $("#TableThirdCategory").empty();
-            /* Begin: Add Table Rows */
-            var tableThirdCategory = document.getElementById("TableThirdCategory");
-            var row = tableThirdCategory.insertRow(0);
-        /*End: */
+            var tableThirdCategory = $("#TableThirdCategory tbody");
+            var tableFourthCategory = $("#TableFourthCategory tbody");
+            var tableFifthCategory = $("#TableFifthCategory tbody");
+            var tableSixthCategory = $("#TableSixthCategory tbody");
+
+
+            tableThirdCategory.empty();
+            tableFourthCategory.empty();
+            tableFifthCategory.empty();
+            tableSixthCategory.empty();
+
+
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("fetchThirdCategory", "CascadeDropdownCategories", new { area = "" })',
                 dataType: 'json',
                 data: { JsonSecondCategoryID: $("#secondCategoryDropdown").val() },
-                success: function (selThirdCategory) {
-                    $.each(selThirdCategory, function (i, thirdCategory) {
-                        $(tableThirdCategory).find('tbody').append('<tr><td>' + '<input type="checkbox" data-value="' + thirdCategory.text.replace(/\s+/g, '-').toLowerCase() + '" class="firstCheckbox" name="thirdCategoryName" value="' + thirdCategory.value + '"/> ' + thirdCategory.text + '</td></tr>');
-                    });
+                success: function (response) {
+                    console.log(response); // Debugging: log the response to check the structure
+
+                    if (response.selThirdCategory) {
+                        $.each(response.selThirdCategory, function (i, thirdCategory) {
+                            tableThirdCategory.append(
+                                '<tr><td>' +
+                                '<input type="checkbox" data-value="' + thirdCategory.text.replace(/\s+/g, '-').toLowerCase() +
+                                '" class="firstCheckbox" name="thirdCategoryName" value="' + thirdCategory.value + '"/> ' +
+                                thirdCategory.text +
+                                '</td></tr>'
+                            );
+                        });
+                    } else {
+                        console.error('ThirdCategory data is missing in the response.');
+                    }
+
+                    if (response.selFourthCategory) {
+                        $.each(response.selFourthCategory, function (i, fourthCategory) {
+                            tableFourthCategory.append(
+                                '<tr><td>' +
+                                '<input type="checkbox" data-value="' + fourthCategory.text.replace(/\s+/g, '-').toLowerCase() +
+                                '" class="firstCheckbox" name="fourthCategoryName" value="' + fourthCategory.value + '"/> ' +
+                                fourthCategory.text +
+                                '</td></tr>'
+                            );
+                        });
+                    } else {
+                        console.error('FourthCategory data is missing in the response.');
+                    }
+
+                    if (response.selFifthCategory) {
+                        $.each(response.selFifthCategory, function (i, fifthCategory) {
+                            tableFifthCategory.append(
+                                '<tr><td>' +
+                                '<input type="checkbox" data-value="' + fifthCategory.text.replace(/\s+/g, '-').toLowerCase() +
+                                '" class="firstCheckbox" name="fifthCategoryName" value="' + fifthCategory.value + '"/> ' +
+                                fifthCategory.text +
+                                '</td></tr>'
+                            );
+                        });
+                    } else {
+                        console.error('FifthCategory data is missing in the response.');
+                    }
+
+
+                    if (response.selSixthCategory) {
+                        $.each(response.selSixthCategory, function (i, sixthCategory) {
+                            tableSixthCategory.append(
+                                '<tr><td>' +
+                                '<input type="checkbox" data-value="' + sixthCategory.text.replace(/\s+/g, '-').toLowerCase() +
+                                '" class="firstCheckbox" name="sixthCategoryName" value="' + sixthCategory.value + '"/> ' +
+                                sixthCategory.text +
+                                '</td></tr>'
+                            );
+                        });
+                    } else {
+                        console.error('SixthCategory data is missing in the response.');
+                    }
+
                 },
                 error: function (ex) {
                     alert("Cannot fetch data, error is " + ex);
                 }
             });
+
             return false;
-        })
+        });
     });
-</script>*@
+</script>
 <!-- End: -->
 <!-- Begin: Fetch Fourth Category -->
-@*<script type="text/javascript">
+@* <script type="text/javascript">
     $(document).ready(function () {
         var tableThirdCategory = document.getElementById("TableThirdCategory");
         var tableFourthCategory = document.getElementById("TableFourthCategory");
@@ -125,9 +232,9 @@
             $('.' + currentCheckDataValue).remove();
         });
     });
-</script>*@
+</script> *@
 <!-- Begin: Fetch Fifth Category -->
-<!--<script type="text/javascript">
+@* <script type="text/javascript">
     $(document).ready(function () {
         var tableFourthCategory = document.getElementById("TableFourthCategory");
         var tableFifthCategory = document.getElementById("TableFifthCategory");
@@ -158,10 +265,10 @@
             $('.' + currentCheckDataValue).remove();
         });
     });
-</script>-->
+</script> *@
 
 <!-- Begin: Fetch Sixth Category -->
-<!--<script type="text/javascript">
+@* <script type="text/javascript">
     $(document).ready(function () {
         var tableFifthCategory = document.getElementById("TableFifthCategory");
         var tableSixthCategory = document.getElementById("TableSixthCategory");
@@ -193,42 +300,42 @@
             $('.' + currentCheckDataValue).remove();
         });
     });
-</script>-->
+</script> *@
 
 <!-- Begin: Get Third Checkboxes Value -->
 <script type="text/javascript">
     $(document).ready(function () {
         $("#confirmCategories").click(function () {
             /* Begin: Get third categories */
-            //var thirdCategories = [];
-            //$.each($("input[name='thirdCategoryName']:checked"), function () {
-            //    thirdCategories.push($(this).val());
-            //});
-            //$("#getThirdCategories").val(thirdCategories.join(","));
+            var thirdCategories = [];
+            $.each($("input[name='thirdCategoryName']:checked"), function () {
+               thirdCategories.push($(this).val());
+            });
+            $("#getThirdCategories").val(thirdCategories.join(","));
             /* End: */
 
             /* Begin: Get fourth categories */
-            //var fourthCategories = [];
-            //$.each($("input[name='fourthCategoryName']:checked"), function () {
-            //    fourthCategories.push($(this).val());
-            //});
-            //$("#getFourthCategories").val(fourthCategories.join(","));
+            var fourthCategories = [];
+            $.each($("input[name='fourthCategoryName']:checked"), function () {
+               fourthCategories.push($(this).val());
+            });
+            $("#getFourthCategories").val(fourthCategories.join(","));
             /* End: */
 
             /* Begin: Get fifth categories */
-            //var fifthCategories = [];
-            //$.each($("input[name='fifthCategoryName']:checked"), function () {
-            //    fifthCategories.push($(this).val());
-            //});
-            //$("#getFifthCategories").val(fifthCategories.join(","));
+            var fifthCategories = [];
+            $.each($("input[name='fifthCategoryName']:checked"), function () {
+               fifthCategories.push($(this).val());
+            });
+            $("#getFifthCategories").val(fifthCategories.join(","));
             /* End: */
 
             /* Begin: Get sixth categories */
-            //var sixthCategories = [];
-            //$.each($("input[name='sixthCategoryName']:checked"), function () {
-            //    sixthCategories.push($(this).val());
-            //});
-            //$("#getSixthCategories").val(sixthCategories.join(","));
+            var sixthCategories = [];
+            $.each($("input[name='sixthCategoryName']:checked"), function () {
+               sixthCategories.push($(this).val());
+            });
+            $("#getSixthCategories").val(sixthCategories.join(","));
             /* End: */
 
             /* Begin: Open confirmation modal popup */
@@ -295,17 +402,52 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-3">
-                                <table id="TableThirdCategory" class="table table-bordered table-hover">
+                                <table id="TableThirdCategory" border="1">
+                                    <thead>
+                                        <tr>
+                                            @* <th>Third Category</th> *@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rows will be appended here -->
+                                    </tbody>
                                 </table>
                             </div>
                             <div class="col-lg-3">
-                                <table id="TableFourthCategory" class="table table-bordered table-hover table4"></table>
+                                <table id="TableFourthCategory" border="1">
+                                    <thead>
+                                        <tr>
+                                            @*  <th>Fourth Category</th> *@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rows will be appended here -->
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="col-lg-3">
-                                <table id="TableFifthCategory" class="table table-bordered table-hover table5"></table>
+                                <table id="TableFifthCategory" border="1">
+                                    <thead>
+                                        <tr>
+                                            @*  <th>Fifth Category</th> *@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rows will be appended here -->
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="col-lg-3">
-                                <table id="TableSixthCategory" class="table table-bordered table-hover table6"></table>
+                                <table id="TableSixthCategory" border="1">
+                                    <thead>
+                                        <tr>
+                                            @*  <th>Sixth Category</th> *@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Rows will be appended here -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

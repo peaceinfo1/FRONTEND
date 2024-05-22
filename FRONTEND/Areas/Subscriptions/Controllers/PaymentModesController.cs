@@ -94,7 +94,7 @@ namespace FRONTEND.Areas.Subscriptions.Controllers
                     if (listingContext != null && listingContext.Listing != null && paymentMode != null)
                     {
                         var listing = await listingContext.Listing.Where(l => l.ListingID == paymentMode.ListingID).FirstOrDefaultAsync();
-
+                        var communication = await listingContext.Communication.Where(l => l.ListingID == paymentMode.ListingID).FirstOrDefaultAsync();
                         // Continue processing with the 'listing' variable...
                     }
                     else

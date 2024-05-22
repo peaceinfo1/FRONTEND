@@ -1,7 +1,7 @@
 ﻿@model BOL.LISTING.Address
 
 @{
-    ViewData["Title"] = "Add Address";
+    ViewData["Title"] = "Add Addresses Details";
     Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
 }
 
@@ -154,7 +154,7 @@
         $('#AssemblyID')
             .select2()
             .on('select2:open', () => {
-                $(".select2-results:not(:has(a))").append('<a data-target="#modelAssembly" data-toggle="modal" href="" id="addAssembly" class="addNewItem" style="background-color:#f5f5f5; color:#696969; border-top:1px solid #b0b0b0; font-weight:bold;"> + Add Assembly</a>');
+                $(".select2-results:not(:has(a))").append('<a data-target="#modelAssembly" data-toggle="modal" href="" id="addAssembly" class="addNewItem" style="background-color:#f5f5f5; color:#696969; border-top:1px solid #b0b0b0; font-weight:bold;"> + Add Locality</a>');
             })
 
         $(document).on("click", "#addAssembly", function () {
@@ -178,7 +178,7 @@
         $('#PincodeID')
             .select2()
             .on('select2:open', () => {
-                $(".select2-results:not(:has(a))").append('<a data-target="#modelPincode" data-toggle="modal" href="" id="addPincode" class="addNewItem"> + Add Pincode</a>');
+                $(".select2-results:not(:has(a))").append('<a data-target="#modelPincode" data-toggle="modal" href="" id="addPincode" class="addNewItem" style="background-color:#f5f5f5; color:#696969; border-top:1px solid #b0b0b0; font-weight:bold;"> + Add Pincode</a>');
             })
 
         $(document).on("click", "#addPincode", function () {
@@ -201,7 +201,7 @@
         $('#LocalityID')
             .select2()
             .on('select2:open', () => {
-                $(".select2-results:not(:has(a))").append('<a data-target="#modelLocality" data-toggle="modal" href="" id="addLocality" class="addNewItem">Add Locality</a>');
+                $(".select2-results:not(:has(a))").append('<a data-target="#modelLocality" data-toggle="modal" href="" id="addLocality" class="addNewItem" style="background-color:#f5f5f5; color:#696969; border-top:1px solid #b0b0b0; font-weight:bold;">+ Add Area</a>');
             })
 
         $(document).on("click", "#addLocality", function () {
@@ -338,11 +338,13 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label class="control-label">Address</label>
-                            <input type="text" asp-for="LocalAddress" class="form-control">
+                            <textarea asp-for="LocalAddress" class="form-control"></textarea>
+                            @* <input type="text" asp-for="LocalAddress" class="form-control"> *@
                             <span asp-validation-for="LocalAddress" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <input type="submit" value="Save & Continue" class="btn btn-primary" />
+                            <a href="#" onclick="history.back();" class="btn btn-secondary">Back</a>
                         </div>
                     </div>
                 </div>

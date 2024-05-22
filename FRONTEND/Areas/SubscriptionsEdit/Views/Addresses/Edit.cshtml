@@ -187,7 +187,7 @@
         $('#AssemblyID')
             .select2()
             .on('select2:open', () => {
-                $(".select2-results:not(:has(a))").append('<a data-target="#modelAssembly" data-toggle="modal" href="" id="addAssembly" class="addNewItem" style="background-color:#f5f5f5; color:#696969; border-top:1px solid #b0b0b0; font-weight:bold;"> + Add Assembly</a>');
+                $(".select2-results:not(:has(a))").append('<a data-target="#modelAssembly" data-toggle="modal" href="" id="addAssembly" class="addNewItem" style="background-color:#f5f5f5; color:#696969; border-top:1px solid #b0b0b0; font-weight:bold;"> + Add Locality</a>');
             })
 
         $(document).on("click", "#addAssembly", function () {
@@ -211,7 +211,7 @@
         $('#PincodeID')
             .select2()
             .on('select2:open', () => {
-                $(".select2-results:not(:has(a))").append('<a data-target="#modelPincode" data-toggle="modal" href="" id="addPincode" class="addNewItem"> + Add Pincode</a>');
+                $(".select2-results:not(:has(a))").append('<a data-target="#modelPincode" data-toggle="modal" href="" id="addPincode" class="addNewItem" style="background-color:#f5f5f5; color:#696969; border-top:1px solid #b0b0b0; font-weight:bold;"> + Add Pincode</a>');
             })
 
         $(document).on("click", "#addPincode", function () {
@@ -234,7 +234,7 @@
         $('#LocalityID')
             .select2()
             .on('select2:open', () => {
-                $(".select2-results:not(:has(a))").append('<a data-target="#modelLocality" data-toggle="modal" href="" id="addLocality" class="addNewItem">Add Locality</a>');
+                $(".select2-results:not(:has(a))").append('<a data-target="#modelLocality" data-toggle="modal" href="" id="addLocality" class="addNewItem" style="background-color:#f5f5f5; color:#696969; border-top:1px solid #b0b0b0; font-weight:bold;">+ Add Area</a>');
             })
 
         $(document).on("click", "#addLocality", function () {

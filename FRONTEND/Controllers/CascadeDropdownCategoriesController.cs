@@ -44,38 +44,42 @@ namespace FRONTEND.Controllers
 
         public JsonResult fetchThirdCategory(int JsonSecondCategoryID)
         {
-            var selThirdCategory = categoryContext.ThirdCategory
-                .OrderBy(s => s.Name)
-                .Where(s => s.SecondCategoryID == JsonSecondCategoryID)
-                .Select(s => new { value = s.ThirdCategoryID, text = s.Name });
-            return Json(new SelectList(selThirdCategory, "value", "text"));
+
+            var selThirdCategory = categoryContext.ThirdCategory.OrderBy(s => s.Name).Where(s => s.SecondCategoryID == JsonSecondCategoryID).Select(s => new { value = s.ThirdCategoryID, text = s.Name }).ToList();  // Make sure to execute the query
+            var selFourthCategory = categoryContext.FourthCategory.OrderBy(s => s.Name).Where(s => s.SecondCategoryID == JsonSecondCategoryID).Select(s => new { value = s.FourthCategoryID, text = s.Name }).ToList();  // Make sure to execute the query
+            var selFifthCategory = categoryContext.FifthCategory.OrderBy(s => s.Name).Where(s => s.SecondCategoryID == JsonSecondCategoryID).Select(s => new { value = s.FifthCategoryID, text = s.Name }).ToList();  // Make sure to execute the query
+            var selSixthCategory = categoryContext.SixthCategory.OrderBy(s => s.Name).Where(s => s.SecondCategoryID == JsonSecondCategoryID).Select(s => new { value = s.SixthCategoryID, text = s.Name }).ToList();  // Make sure to execute the query
+
+            return Json(new { selThirdCategory, selFourthCategory, selFifthCategory, selSixthCategory });
         }
 
-        public JsonResult fetchFourthCategory(int JsonThirdCategoryID)
-        {
-            var selFourthCategory = categoryContext.FourthCategory
-                .OrderBy(s => s.Name)
-                .Where(s => s.ThirdCategoryID == JsonThirdCategoryID)
-                .Select(s => new { value = s.FourthCategoryID, text = s.Name });
-            return Json(new SelectList(selFourthCategory, "value", "text"));
-        }
+        //public JsonResult fetchFourthCategory(int JsonThirdCategoryID)
+        //{
+        //    var selFourthCategory = categoryContext.FourthCategory
+        //        .OrderBy(s => s.Name)
+        //        .Where(s => s.ThirdCategoryID == JsonThirdCategoryID)
+        //        .Select(s => new { value = s.FourthCategoryID, text = s.Name });
 
-        public JsonResult fetchFifthCategory(int JsonFourthCategoryID)
-        {
-            var selFifthCategory = categoryContext.FifthCategory
-                .OrderBy(s => s.Name)
-                .Where(s => s.FourthCategoryID == JsonFourthCategoryID)
-                .Select(s => new { value = s.FifthCategoryID, text = s.Name });
-            return Json(new SelectList(selFifthCategory, "value", "text"));
-        }
 
-        public JsonResult fetchSixthCategory(int JsonFifthCategoryID)
-        {
-            var selSixthCategory = categoryContext.SixthCategory
-                .OrderBy(s => s.Name)
-                .Where(s => s.FifthCategoryID == JsonFifthCategoryID)
-                .Select(s => new { value = s.SixthCategoryID, text = s.Name });
-            return Json(new SelectList(selSixthCategory, "value", "text"));
-        }
+        //    return Json(new SelectList(selFourthCategory, "value", "text"));
+        //}
+
+        //public JsonResult fetchFifthCategory(int JsonFourthCategoryID)
+        //{
+        //    var selFifthCategory = categoryContext.FifthCategory
+        //        .OrderBy(s => s.Name)
+        //        .Where(s => s.FourthCategoryID == JsonFourthCategoryID)
+        //        .Select(s => new { value = s.FifthCategoryID, text = s.Name });
+        //    return Json(new SelectList(selFifthCategory, "value", "text"));
+        //}
+
+        //public JsonResult fetchSixthCategory(int JsonFifthCategoryID)
+        //{
+        //    var selSixthCategory = categoryContext.SixthCategory
+        //        .OrderBy(s => s.Name)
+        //        .Where(s => s.FifthCategoryID == JsonFifthCategoryID)
+        //        .Select(s => new { value = s.SixthCategoryID, text = s.Name });
+        //    return Json(new SelectList(selSixthCategory, "value", "text"));
+        //}
     }
 }

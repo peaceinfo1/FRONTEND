@@ -53,44 +53,79 @@
             <h4>@ViewData["Title"]</h4>
             <hr />
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" disabled />
+                        <label asp-for="Language" class="control-label"></label>
+                        <div class="dropdown">
+                            <button class="form-control btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                                Select Languages
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach (var language in (List<string>)ViewData["Language"])
+                                {
+                                    <div class="form-check dropdown-item">
+                                        <input class="form-check-input language-checkbox" type="checkbox" name="Languages" value="@language" id="language-@language">
+                                        <label class="form-check-label" for="language-@language">
+                                            @language
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <span asp-validation-for="Language" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Website" class="control-label"></label>
-                        <input asp-for="Website" class="form-control" disabled />
-                    </div>
+
                     <div class="form-group">
                         <label asp-for="Mobile" class="control-label"></label>
-                        <input asp-for="Mobile" type="number" class="form-control" disabled />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Whatsapp" class="control-label"></label>
-                        <input asp-for="Whatsapp" type="number" class="form-control" disabled />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Telephone" class="control-label"></label>
-                        <input asp-for="Telephone" type="number" class="form-control" disabled />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="TelephoneSecond" class="control-label"></label>
-                        <input asp-for="TelephoneSecond" type="number" class="form-control" disabled />
+                        <input asp-for="Mobile" type="number" class="form-control" data-parsley-class-handler="#fnWrapper" required disabled />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="TollFree" class="control-label"></label>
                         <input asp-for="TollFree" type="number" class="form-control" disabled />
+                        <span asp-validation-for="TollFree" class="text-danger"></span>
+                    </div>
+
+                    @*   <div class="form-group">
+                    <label asp-for="Whatsapp" class="control-label"></label>
+                    <input asp-for="Whatsapp" type="number" class="form-control" data-parsley-class-handler="#fnWrapper" required />
+                    <span asp-validation-for="Whatsapp" class="text-danger"></span>
+                    </div> *@
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" data-parsley-class-handler="#fnWrapper" required disabled />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Fax" class="control-label"></label>
-                        <input asp-for="Fax" type="number" class="form-control" disabled />
+                        <label asp-for="Telephone" class="control-label"></label>
+                        <input asp-for="Telephone" type="number" class="form-control" disabled />
+                        <span asp-validation-for="Telephone" class="text-danger"></span>
+                    </div>
+
+                    @* <div class="form-group">
+                    <label asp-for="Fax" class="control-label"></label>
+                    <input asp-for="Fax" type="number" class="form-control" />
+                    <span asp-validation-for="Fax" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="SkypeID" class="control-label"></label>
-                        <input asp-for="SkypeID" class="form-control" disabled />
+                    <label asp-for="SkypeID" class="control-label"></label>
+                    <input asp-for="SkypeID" class="form-control" />
+                    <span asp-validation-for="SkypeID" class="text-danger"></span>
+                    </div> *@
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="TelephoneSecond" class="control-label">Registered Mobile</label>
+                        <input asp-for="TelephoneSecond" type="number" class="form-control" disabled />
+                        <span asp-validation-for="TelephoneSecond" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Website" class="control-label"></label>
+                        <input asp-for="Website" class="form-control" disabled />
+                        <span asp-validation-for="Website" class="text-danger"></span>
                     </div>
                 </div>
             </div>

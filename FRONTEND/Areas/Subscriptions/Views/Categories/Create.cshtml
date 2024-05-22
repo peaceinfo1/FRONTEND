@@ -1,7 +1,7 @@
 ﻿@model BOL.LISTING.Categories
 
 @{
-    ViewData["Title"] = "Add Categories";
+    ViewData["Title"] = "Add Category Details";
     Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml";
 }
 
@@ -16,6 +16,79 @@
     ViewData["BT-Link2"] = "/Subscriptions/Listings/Index";
 }
 <!-- End: -->
+
+<style>
+    .category-tables {
+        display: inline-block;
+        width: 23%; /* Adjust as needed to fit 4 tables in a row */
+        margin-right: 1%; /* Adjust the gap between tables */
+        vertical-align: top;
+        margin-bottom: 20px; /* Adjust as needed */
+    }
+
+        /* Style for table headers */
+        .category-tables table th {
+            text-align: left;
+            padding: 8px;
+            background-color: #f2f2f2; /* Adjust as needed */
+            border-bottom: 1px solid #ddd; /* Adjust as needed */
+        }
+
+        /* Style for table rows */
+        .category-tables table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd; /* Adjust as needed */
+        }
+
+        /* Style for alternate row background */
+        .category-tables table tbody tr:nth-child(even) {
+            background-color: #f2f2f2; /* Adjust as needed */
+        }
+
+
+
+
+
+    table {
+        border-collapse: collapse; /* Ensures borders are not doubled */
+        width: 100%; /* Adjust the width as needed */
+    }
+
+    table, th, td {
+        padding: 10px; /* Adds padding to the table cells for better spacing */
+        text-align: left; /* Aligns text to the left */
+        font-size: 16px; /* Increases the font size for better readability */
+    }
+
+    thead {
+        background-color: #f2f2f2; /* Adds a light gray background color to the table headers */
+    }
+
+    th {
+        font-weight: bold; /* Makes the header text bold */
+        font-size: 18px; /* Slightly larger font size for headers */
+    }
+
+    td {
+        font-size: 16px; /* Sets the font size for table data cells */
+    }
+
+    /* Optional: additional styling for a cleaner look */
+    body {
+        font-family: Arial, sans-serif; /* Sets a clean and readable font for the entire page */
+    }
+
+    /* New styles for checkbox alignment */
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+    }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 10px; /* Adds space between checkbox and label */
+        }
+</style>
+
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 
@@ -45,7 +118,128 @@
 </script>
 <!-- End: -->
 <!-- Begin: Fetch Third Category -->
-<!--<script type="text/javascript">
+
+<script type="text/javascript">
+    $(document).ready(function ()  {
+        debugger;
+        $("#secondCategoryDropdown").change(function () {
+            debugger;
+            var tableThirdCategory = $("#Categoryid");
+            
+
+
+            // tableThirdCategory.empty();
+            // tableFourthCategory.empty();
+            // tableFifthCategory.empty();
+            // tableSixthCategory.empty();
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("fetchThirdCategory", "CascadeDropdownCategories", new { area = "" })',
+                dataType: 'json',
+                data: { JsonSecondCategoryID: $("#secondCategoryDropdown").val() },
+                success: function (response) {
+                    console.log(response); // Debugging: log the response to check the structure
+
+                    if (response.selThirdCategory) {
+                        $.each(response.selThirdCategory, function (i, thirdCategory) {
+                            debugger;
+
+                            tableThirdCategory.append(
+
+                                ' <div class="col-md-3">' +
+                                    '<div class="clearfix add_bottom_15">' +
+                                '<div class="checkboxes float-left">' +
+                                '<input type="checkbox" data-value="' + thirdCategory.text.replace(/\s+/g, '-').toLowerCase() +
+                                '" class="firstCheckbox" name="thirdCategoryName" value="' + thirdCategory.value + '"/> ' +
+                                '<label class="container_check" >'+thirdCategory.text+'</label>' +
+                                '</div></div></div>'
+                                // '<input type="checkbox" data-value="' + thirdCategory.text.replace(/\s+/g, '-').toLowerCase() +
+                                // '" class="firstCheckbox" name="thirdCategoryName" value="' + thirdCategory.value + '"/> ' +
+                                // thirdCategory.text +
+                                // '</td></tr>'
+
+                              
+
+
+                            );
+                        });
+                    } else {
+                        console.error('ThirdCategory data is missing in the response.');
+                    }
+
+                    if (response.selFourthCategory) {
+                        $.each(response.selFourthCategory, function (i, fourthCategory) {
+                            tableThirdCategory.append(
+
+                                ' <div class="col-md-3">' +
+                                '<div class="clearfix add_bottom_15" >' +
+                                '<div class="checkboxes float-left">' +
+                                '<input type="checkbox" data-value="' + fourthCategory.text.replace(/\s+/g, '-').toLowerCase() +
+                                '" class="firstCheckbox" name="fourthCategoryName" value="' + fourthCategory.value + '"/> ' +
+                                '<label class="container_check" >' + fourthCategory.text + '</label>' +
+                                '</div></div></div>'
+                            );
+                        });
+                    } else {
+                        console.error('FourthCategory data is missing in the response.');
+                    }
+
+                    if (response.selFifthCategory) {
+                        $.each(response.selFifthCategory, function (i, fifthCategory) {
+                            tableThirdCategory.append(
+                                ' <div class="col-md-3">' +
+                                '<div class="clearfix add_bottom_15" >' +
+                                '<div class="checkboxes float-left">' +
+                                '<input type="checkbox" data-value="' + fifthCategory.text.replace(/\s+/g, '-').toLowerCase() +
+                                '" class="firstCheckbox" name="fifthCategoryName" value="' + fifthCategory.value + '"/> ' +
+                                '<label class="container_check" >' + fifthCategory.text + '</label>' +
+                                '</div></div></div>'
+                                
+                            );
+                        });
+                    } else {
+                        console.error('FifthCategory data is missing in the response.');
+                    }
+
+
+                    if (response.selSixthCategory) {
+                        $.each(response.selSixthCategory, function (i, sixthCategory) {
+                            tableThirdCategory.append(
+                                ' <div class="col-md-3">' +
+                                '<div class="clearfix add_bottom_15" >' +
+                                '<div class="checkboxes float-left">' +
+                                '<input type="checkbox" data-value="' + sixthCategory.text.replace(/\s+/g, '-').toLowerCase() +
+                                '" class="firstCheckbox" name="sixthCategoryName" value="' + sixthCategory.value + '"/> ' +
+                                '<label class="container_check" >' + sixthCategory.text + '</label>' +
+                                '</div></div></div>'
+                            );
+                        });
+                    } else {
+                        console.error('SixthCategory data is missing in the response.');
+                    }
+
+                },
+                error: function (ex) {
+                    alert("Cannot fetch data, error is " + ex);
+                }
+            });
+
+            return false;
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+@* <script type="text/javascript">
     $(document).ready(function () {
         $("#secondCategoryDropdown").change(function () {
             $("#TableThirdCategory").empty();
@@ -58,9 +252,12 @@
                 url: '@Url.Action("fetchThirdCategory", "CascadeDropdownCategories", new { area = "" })',
                 dataType: 'json',
                 data: { JsonSecondCategoryID: $("#secondCategoryDropdown").val() },
-                success: function (selThirdCategory) {
+                success: function (selThirdCategory, selFourthCategory) {
                     $.each(selThirdCategory, function (i, thirdCategory) {
                         $(tableThirdCategory).find('tbody').append('<tr><td>' + '<input type="checkbox" data-value="' + thirdCategory.text.replace(/\s+/g, '-').toLowerCase() + '" class="firstCheckbox" name="thirdCategoryName" value="' + thirdCategory.value + '"/> ' + thirdCategory.text + '</td></tr>');
+                    });
+                    $.each(selFourthCategory, function (i, fourthCategory) {
+                        $(tableFourthCategory).find('tbody').append('<tr><td>' + '<input type="checkbox" data-value="' + fourthCategory.text.replace(/\s+/g, '-').toLowerCase() + '" class="firstCheckbox" name="fourthCategoryName" value="' + fourthCategory.value + '"/> ' + fourthCategory.text + '</td></tr>');
                     });
                 },
                 error: function (ex) {
@@ -70,10 +267,10 @@
             return false;
         })
     });
-</script>-->
+</script> *@
 <!-- End: -->
 <!-- Begin: Fetch Fourth Category -->
-<!--<script type="text/javascript">
+@* <script type="text/javascript">
     $(document).ready(function () {
         var tableThirdCategory = document.getElementById("TableThirdCategory");
         var tableFourthCategory = document.getElementById("TableFourthCategory");
@@ -106,9 +303,9 @@
             $('.' + currentCheckDataValue).remove();
         });
     });
-</script>-->
+</script> *@
 <!-- Begin: Fetch Fifth Category -->
-<!--<script type="text/javascript">
+@* <script type="text/javascript">
     $(document).ready(function () {
         var tableFourthCategory = document.getElementById("TableFourthCategory");
         var tableFifthCategory = document.getElementById("TableFifthCategory");
@@ -141,10 +338,10 @@
             $('.' + currentCheckDataValue).remove();
         });
     });
-</script>-->
+</script> *@
 
 <!-- Begin: Fetch Sixth Category -->
-<!--<script type="text/javascript">
+@* <script type="text/javascript">
     $(document).ready(function () {
         var tableFifthCategory = document.getElementById("TableFifthCategory");
         var tableSixthCategory = document.getElementById("TableSixthCategory");
@@ -177,42 +374,42 @@
             $('.' + currentCheckDataValue).remove();
         });
     });
-</script>-->
+</script> *@
 
 <!-- Begin: Get Third Checkboxes Value -->
 <script type="text/javascript">
     $(document).ready(function () {
         $("#confirmCategories").click(function () {
             //* Begin: Get third categories */
-            //var thirdCategories = [];
-            //$.each($("input[name='thirdCategoryName']:checked"), function () {
-            //    thirdCategories.push($(this).val());
-            //});
-            //$("#getThirdCategories").val(thirdCategories.join(","));
+            var thirdCategories = [];
+            $.each($("input[name='thirdCategoryName']:checked"), function () {
+               thirdCategories.push($(this).val());
+            });
+            $("#getThirdCategories").val(thirdCategories.join(","));
             //* End: */
 
             //* Begin: Get fourth categories */
-            //var fourthCategories = [];
-            //$.each($("input[name='fourthCategoryName']:checked"), function () {
-            //    fourthCategories.push($(this).val());
-            //});
-            //$("#getFourthCategories").val(fourthCategories.join(","));
+            var fourthCategories = [];
+            $.each($("input[name='fourthCategoryName']:checked"), function () {
+               fourthCategories.push($(this).val());
+            });
+            $("#getFourthCategories").val(fourthCategories.join(","));
             //* End: */
 
             //* Begin: Get fifth categories */
-            //var fifthCategories = [];
-            //$.each($("input[name='fifthCategoryName']:checked"), function () {
-            //    fifthCategories.push($(this).val());
-            //});
-            //$("#getFifthCategories").val(fifthCategories.join(","));
+            var fifthCategories = [];
+            $.each($("input[name='fifthCategoryName']:checked"), function () {
+               fifthCategories.push($(this).val());
+            });
+            $("#getFifthCategories").val(fifthCategories.join(","));
             //* End: */
 
             //* Begin: Get sixth categories */
-            //var sixthCategories = [];
-            //$.each($("input[name='sixthCategoryName']:checked"), function () {
-            //    sixthCategories.push($(this).val());
-            //});
-            //$("#getSixthCategories").val(sixthCategories.join(","));
+            var sixthCategories = [];
+            $.each($("input[name='sixthCategoryName']:checked"), function () {
+               sixthCategories.push($(this).val());
+            });
+            $("#getSixthCategories").val(sixthCategories.join(","));
             //* End: */
 
             /* Begin: Open confirmation modal popup */
@@ -325,28 +522,42 @@
                     </div>
                 </div>
                 <hr />
-
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <table id="TableThirdCategory" class="table table-bordered table-hover">
-                                </table>
-                            </div>
-                            <div class="col-lg-3">
-                                <table id="TableFourthCategory" class="table table-bordered table-hover"></table>
-                            </div>
-                            <div class="col-lg-3">
-                                <table id="TableFifthCategory" class="table table-bordered table-hover"></table>
-                            </div>
-                            <div class="col-lg-3">
-                                <table id="TableSixthCategory" class="table table-bordered table-hover"></table>
-                            </div>
-                        </div>
+                <div class="col-sm-12">
+                    <div class="row" id="Categoryid">
+
                     </div>
+                   
+                        @* <div class="col-md-3" id="TableFourthCategory">
+                            <div class="clearfix add_bottom_15">
+                                <div class="checkboxes float-left">
+                                    <input type="checkbox" />
+                                    <label class="container_check">Static</label>
+                                </div>
+                            </div>
+                        </div> *@
+                       @*  <div class="col-md-3" id="TableFifthCategory">
+                            <div class="clearfix add_bottom_15">
+                                <div class="checkboxes float-left">
+                                    <input type="checkbox" />
+                                    <label class="container_check">Static</label>
+                                </div>
+                            </div>
+                        </div> *@
+                       @*  <div class="col-md-3" id="TableSixthCategory">
+                            <div class="clearfix add_bottom_15">
+                                <div class="checkboxes float-left">
+                                    <input type="checkbox" />
+                                    <label class="container_check">Static</label>
+                                </div>
+                            </div>
+                        </div> *@
+                    
+                </div>
                 </div>
                 <hr />
-                <a href="#0" id="confirmCategories" class="btn btn-primary">Save Categories</a>
+                <a href="#0" id="confirmCategories" class="btn btn-primary">Save & Continue</a>
+                <a href="#" onclick="history.back();" class="btn btn-secondary">Back</a>
 
                 <div class="modal" id="confirmCategoriesPopup">
                     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

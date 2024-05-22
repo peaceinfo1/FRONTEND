@@ -67,14 +67,23 @@
                                         <input class="form-check-input paymentMethod" asp-for="Cash" /> @Html.DisplayNameFor(model => model.Cash)
                                     </label>
                                 </div>
+
                                 <div class="form-group form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input paymentMethod" asp-for="NetBanking" /> @Html.DisplayNameFor(model => model.NetBanking)
+                                        <input class="form-check-input paymentMethod" asp-for="DebitCard" /> @Html.DisplayNameFor(model => model.DebitCard)
                                     </label>
                                 </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input paymentMethod" asp-for="Cheque" /> @Html.DisplayNameFor(model => model.Cheque)
+                                    </label>
+                                </div>
+
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input paymentMethod" asp-for="CreditCard" /> @Html.DisplayNameFor(model => model.CreditCard)
                                     </label>
                                 </div>
                             </div>
@@ -86,31 +95,24 @@
                                 </div>
                                 <div class="form-group form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input paymentMethod" asp-for="DebitCard" /> @Html.DisplayNameFor(model => model.DebitCard)
+                                        <input class="form-check-input paymentMethod" asp-for="NetBanking" /> @Html.DisplayNameFor(model => model.NetBanking)
                                     </label>
+                                </div>
+                                @*  <div class="form-group form-check">
+                                <label class="form-check-label">
+                                <input class="form-check-input paymentMethod" asp-for="PayTM" /> @Html.DisplayNameFor(model => model.PayTM)
+                                </label>
                                 </div>
                                 <div class="form-group form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input paymentMethod" asp-for="CreditCard" /> @Html.DisplayNameFor(model => model.CreditCard)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input paymentMethod" asp-for="PayTM" /> @Html.DisplayNameFor(model => model.PayTM)
-                                    </label>
+                                <label class="form-check-label">
+                                <input class="form-check-input paymentMethod" asp-for="PhonePay" /> @Html.DisplayNameFor(model => model.PhonePay)
+                                </label>
                                 </div>
                                 <div class="form-group form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input paymentMethod" asp-for="PhonePay" /> @Html.DisplayNameFor(model => model.PhonePay)
-                                    </label>
-                                </div>
-                                <div class="form-group form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input paymentMethod" asp-for="Paypal" /> @Html.DisplayNameFor(model => model.Paypal)
-                                    </label>
-                                </div>
+                                <label class="form-check-label">
+                                <input class="form-check-input paymentMethod" asp-for="Paypal" /> @Html.DisplayNameFor(model => model.Paypal)
+                                </label>
+                                </div> *@
                             </div>
                         </div>
                         <hr />

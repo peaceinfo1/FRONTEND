@@ -45,6 +45,18 @@ namespace FRONTEND.Areas.SubscriptionsEdit.Controllers
         // GET: SubscriptionsEdit/Listings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
+            var distinctKeywords = listingContext.Keywords.Select(k => k.SeoKeyword).Distinct().ToList();
+
+            // Create a SelectList with distinct keywords
+            ViewData["Keywords"] = new SelectList(distinctKeywords);
+            ViewData["NatureOfBusiness"] = new SelectList(sharedContext.NatureOfBusiness, "Name", "Name");
+
+            ViewData["Turnover"] = new SelectList(sharedContext.Turnover, "Name", "Name");
+
+            ViewData["Designations"] = new SelectList(sharedContext.Designation, "Name", "Name");
+
+
             if (id == null)
             {
                 return NotFound();
@@ -80,8 +92,8 @@ namespace FRONTEND.Areas.SubscriptionsEdit.Controllers
             }
 
             // Shafi: Verify record ownership
-            if (await listingManager.CompanyOwnerAsync(id.Value, OwnerGuid) == true)
-            {
+            //if (await listingManager.CompanyOwnerAsync(id.Value, OwnerGuid) == true)
+            //{
                 // Begin: Get All Business Category
                 var businessCategories = await listingContext.Listing.Select(i => i.BusinessCategory).Distinct().ToListAsync();
 
@@ -101,6 +113,10 @@ namespace FRONTEND.Areas.SubscriptionsEdit.Controllers
                 ViewData["BusinessCategory"] = new SelectList(businessCategoryList, "Value", "Text");
                 // End: Get All Business Category
 
+                var distinctKeywords = listingContext.Keywords.Select(k => k.SeoKeyword).Distinct().ToList();
+
+                // Create a SelectList with distinct keywords
+                ViewData["Keywords"] = new SelectList(distinctKeywords);
                 ViewData["NatureOfBusiness"] = new SelectList(sharedContext.NatureOfBusiness, "Name", "Name");
 
                 ViewData["Turnover"] = new SelectList(sharedContext.Turnover, "Name", "Name");
@@ -108,11 +124,11 @@ namespace FRONTEND.Areas.SubscriptionsEdit.Controllers
                 ViewData["Designations"] = new SelectList(sharedContext.Designation, "Name", "Name");
 
                 return View(listing);
-            }
-            else
-            {
-                return NotFound();
-            }
+            //}
+            //else
+            //{
+            //    return NotFound();
+            //}
             // End:
         }
 
@@ -121,7 +137,7 @@ namespace FRONTEND.Areas.SubscriptionsEdit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ListingID,OwnerGuid,IPAddress,CreatedDate,CreatedTime,Name,Gender,CompanyName,YearOfEstablishment,NumberOfEmployees,Designation,NatureOfBusiness,Turnover,ListingURL")] Listing listing)
+        public async Task<IActionResult> Edit(int id, [Bind("ListingID,OwnerGuid,IPAddress,CreatedDate,CreatedTime,CompanyName,YearOfEstablishment,GSTNumber,BusinessCategory,NumberOfEmployees,NatureOfBusiness,Turnover,ListingURL,Description")] Listing listing)
         {
             // Shafi: Get UserGuid
             var user = await _userService.GetUserByUserName(User.Identity.Name);
@@ -133,6 +149,10 @@ namespace FRONTEND.Areas.SubscriptionsEdit.Controllers
                 return NotFound();
             }
 
+            var distinctKeywords = listingContext.Keywords.Select(k => k.SeoKeyword).Distinct().ToList();
+
+            // Create a SelectList with distinct keywords
+            ViewData["Keywords"] = new SelectList(distinctKeywords);
             ViewData["NatureOfBusiness"] = new SelectList(sharedContext.NatureOfBusiness, "Name", "Name");
             ViewData["Turnover"] = new SelectList(sharedContext.Turnover, "Name", "Name");
             ViewData["Designations"] = new SelectList(sharedContext.Designation, "Name", "Name");

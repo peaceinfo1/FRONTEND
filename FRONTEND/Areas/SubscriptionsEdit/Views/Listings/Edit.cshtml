@@ -1,7 +1,8 @@
 ﻿@model BOL.LISTING.Listing
 
-@{ ViewData["Title"] = "Edit Company";
-                Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml"; }
+@{
+    ViewData["Title"] = "Edit Company Details";
+      Layout = "~/Views/Shared/Dashboard/_UserDashboard.cshtml"; }
 <!-- Begin: Button in select2 Add New -->
 <style>
     .addNewItem {
@@ -142,23 +143,66 @@
                     <span asp-validation-for="CreatedDate" class="text-danger"></span>
                     <span asp-validation-for="CreatedTime" class="text-danger"></span>
                     <!-- End:-->
-                    @*<div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label">Business Category</label>
-                            <select asp-for="BusinessCategory" asp-items="@ViewBag.BusinessCategory" class="form-control business-category-dropdown select2" id="BusinessCat" data-parsley-class-handler="#fnWrapper" required>
-                                <option selected value=""></option>
-                            </select>
-                            <span asp-validation-for="BusinessCategory" class="text-danger"></span>
-                        </div>
-                    </div>*@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="CompanyName" class="control-label"></label>
-                            <input asp-for="CompanyName" class="form-control" data-parsley-class-handler="#fnWrapper" required />
+                            <input asp-for="CompanyName" id="company-name" class="form-control" data-parsley-class-handler="#fnWrapper" required />
                             <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="YearOfEstablishment" class="control-label"></label>
+                            <input type="date" name="YearOfEstablishment" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" data-parsley-class-handler="#fnWrapper" required />
+                            <span asp-validation-for="YearOfEstablishment" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="GSTNumber" class="control-label"></label>
+                            <input asp-for="GSTNumber" class="form-control" data-parsley-class-handler="#fnWrapper" required />
+                            <span asp-validation-for="GSTNumber" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="BusinessCategory" class="control-label">Business Type</label>
+                            @* <input asp-for="BusinessCategory" id="company-name" class="form-control" data-parsley-class-handler="#fnWrapper" required /> *@
+
+                            <select asp-for="BusinessCategory" asp-items="@ViewBag.Keywords" class="form-control select2" data-parsley-class-handler="#fnWrapper" required>
+                            </select>
+
+                            <span asp-validation-for="BusinessCategory" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="NumberOfEmployees" class="control-label"></label>
+                            <input asp-for="NumberOfEmployees" class="form-control" value="1" />
+                            <span asp-validation-for="NumberOfEmployees" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label">About Us</label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="NatureOfBusiness" class="control-label"></label>
+                            <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusiness" class="form-control select2" data-parsley-class-handler="#fnWrapper" required>
+                            </select>
+                            <span asp-validation-for="NatureOfBusiness" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Turnover" class="control-label"></label>
+                            <select asp-for="Turnover" asp-items="@ViewBag.Turnover" class="form-control select2">
+                            </select>
+                            <span asp-validation-for="Turnover" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+
+                   @*  <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="NatureOfBusiness" class="control-label"></label>
                             <select asp-for="NatureOfBusiness" asp-items="@ViewBag.NatureOfBusiness" class="form-control select2" data-parsley-class-handler="#fnWrapper" required>
@@ -203,7 +247,7 @@
                             <textarea asp-for="Description" rows="4" class="form-control"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
-                    </div>
+                    </div> *@
                     <hr />
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Save Changes</button>

@@ -65,8 +65,18 @@
                         <input value="@country.Name" class="form-control" disabled />
                     </div>
                     <div class="form-group">
+                        <label asp-for="AssemblyID" class="control-label"></label>
+                        <input value="@station.Name" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
                         <label asp-for="StateID" class="control-label"></label>
                         <input value="@state.Name" class="form-control" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PincodeID" class="control-label"></label>
+                        <input value="@pincode.PincodeNumber" class="form-control" disabled />
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -74,16 +84,8 @@
                         <label asp-for="City" class="control-label"></label>
                         <input value="@city.Name" class="form-control" disabled />
                     </div>
-                    <div class="form-group">
-                        <label asp-for="AssemblyID" class="control-label"></label>
-                        <input value="@station.Name" class="form-control" disabled />
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label asp-for="PincodeID" class="control-label"></label>
-                        <input value="@pincode.PincodeNumber" class="form-control" disabled />
-                    </div>
+
+                    
                     @if (locality != null)
                     {
                         <div class="form-group">
